@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(cursor.getCount() == 1) {
                     Toast.makeText(MainActivity.this, id + "님 환영합니다", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, MovieRecommendActivity.class)); // HomeActivity로 고쳐야 함
+                    startActivity(new Intent(MainActivity.this, MenuMainActivity.class));
                     finish();
                 } else {
                     Toast.makeText(MainActivity.this, "아이디 또는 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
