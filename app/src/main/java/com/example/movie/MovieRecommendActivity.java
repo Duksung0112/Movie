@@ -12,6 +12,7 @@ public class MovieRecommendActivity extends Fragment {
     public MovieRecommendActivity() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
