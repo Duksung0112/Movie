@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,7 +23,7 @@ import java.lang.reflect.Field;
 
 public class HomeActivity extends Fragment {
 
-
+    Button btstart;
     MovieHelper openHelper;
     SQLiteDatabase db;
 
@@ -38,6 +40,7 @@ public class HomeActivity extends Fragment {
         ListView listView = (ListView)view.findViewById(R.id.movie_list);
         openHelper = new MovieHelper(getActivity());
         db = openHelper.getWritableDatabase();
+        btstart = (Button) view.findViewById(R.id.btstart);
 
         MyAdapter mMyAdapter = new MyAdapter();
 
@@ -82,6 +85,16 @@ public class HomeActivity extends Fragment {
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             // silently fail...
         }
+
+        btstart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+
+        });
+
 
 
 

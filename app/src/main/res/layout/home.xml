@@ -49,6 +49,7 @@
         android:text="시작하기"
         android:textSize="20dp"
         android:textColor="@color/black"
+        android:id="@+id/btstart"
         android:backgroundTint="#f7dc4f"/>
 
 
