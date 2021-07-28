@@ -8,13 +8,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Movie"
-        >
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity
+            android:name=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".SplashActivity">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN" />
+                <category
+                    android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -23,6 +29,17 @@
         <activity android:name=".SaveMemoActivity"/>
         <activity android:name=".DetailActivity"/>
         <activity android:name=".aMovieActivity"/>
+
+        <activity
+            android:name=".JoinActivity">
+        </activity>
+
+        <activity
+            android:name=".MovieInformationActivity">
+        </activity>
+
+        <activity android:name=".MenuMainActivity"/>
+
 
 
     </application>
