@@ -1,7 +1,11 @@
 package com.example.movie;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +26,6 @@ public class MenuMainActivity extends AppCompatActivity {
         fragment2 = new DiaryActivity();
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment1).commit();
-
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -32,15 +34,16 @@ public class MenuMainActivity extends AppCompatActivity {
                     case R.id.tabHome:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment1).commit();
                         return true;
-
                     case R.id.tabDiary:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment2).commit();
                         return true;
+
 
                 }
                 return false;
             }
         });
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.movie;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -11,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.reflect.Field;
 
@@ -24,9 +28,11 @@ public class HomeActivity extends Fragment {
 
     MovieHelper openHelper;
     SQLiteDatabase db;
+    FloatingActionButton add;
 
     public HomeActivity() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -38,6 +44,31 @@ public class HomeActivity extends Fragment {
         ListView listView = (ListView)view.findViewById(R.id.movie_list);
         openHelper = new MovieHelper(getActivity());
         db = openHelper.getWritableDatabase();
+
+        Button btn_start = (Button)view.findViewById(R.id.btn_start);
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),PhotoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /*Button add = (Button)view.findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),aMovieActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        add = getView().findViewById(R.id.add);
+        add.setOnClickListener(v -> {
+            move();
+        });*/
+
+
 
         MyAdapter mMyAdapter = new MyAdapter();
 
@@ -59,8 +90,6 @@ public class HomeActivity extends Fragment {
 
 
         listView.setAdapter(mMyAdapter);
-
-
 
         Spinner genreSpinner = (Spinner) view.findViewById(R.id.spGenre);
         ArrayAdapter genreAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -84,13 +113,9 @@ public class HomeActivity extends Fragment {
         }
 
 
-
-
-
-
-
         return view;
     }
+
 
     public Bitmap getAppIcon(byte[] b) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(b,0,b.length);

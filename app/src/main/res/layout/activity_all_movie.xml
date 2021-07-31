@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:scrollbars="horizontal">
+    android:scrollbars="horizontal"
+    android:background="#E1E3E4">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,4 +48,7 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+
 </HorizontalScrollView>
+

@@ -68,14 +68,6 @@ public class MovieInformationActivity extends Activity {
 
 
 
-
-
-
-
-
-
-
-
     }
 
     public byte[] getByteArrayFromDrawable(Drawable d) {
