@@ -1,6 +1,7 @@
 package com.example.movie;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -18,6 +19,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Field;
 
@@ -26,6 +31,7 @@ public class HomeActivity extends Fragment {
     Button btstart;
     MovieHelper openHelper;
     SQLiteDatabase db;
+    FloatingActionButton add;
 
     public HomeActivity() {
         // Required empty public constructor
@@ -41,6 +47,7 @@ public class HomeActivity extends Fragment {
         openHelper = new MovieHelper(getActivity());
         db = openHelper.getWritableDatabase();
         btstart = (Button) view.findViewById(R.id.btstart);
+        add = (FloatingActionButton) view.findViewById(R.id.add);
 
         MyAdapter mMyAdapter = new MyAdapter();
 
@@ -89,12 +96,28 @@ public class HomeActivity extends Fragment {
         btstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(getActivity(), PhotoActivity.class));
 
 
             }
 
         });
 
+        View.OnClickListener allMovieOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new aMovieActivity()).commit();
+
+            }
+        };
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "전체 영화 리스트", Snackbar.LENGTH_LONG)
+                        .setAction("AllMovie", allMovieOnClickListener).show();
+            }
+        });
 
 
 

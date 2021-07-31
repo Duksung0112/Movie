@@ -1,5 +1,6 @@
 package com.example.movie;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -12,35 +13,39 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import java.io.ByteArrayOutputStream;
 
-public class MovieRecommendActivity extends Fragment {
+public class MovieRecommendActivity extends AppCompatActivity {
     TextView tvgenre, tvtitle, tvexplain;
     ImageView imgposter;
     MovieHelper openHelper;
     SQLiteDatabase db;
+    Button btnback;
 
     public MovieRecommendActivity() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.movie_recommend);
 
-        View view = inflater.inflate(R.layout.movie_recommend, container, false);
 
-        openHelper = new MovieHelper(getActivity());
+        openHelper = new MovieHelper(this);
         db = openHelper.getWritableDatabase();
-        tvgenre = (TextView) view.findViewById(R.id.tvgenre);
-        tvtitle = (TextView) view.findViewById(R.id.tvtitle);
-        tvexplain = (TextView) view.findViewById(R.id.tvexplain);
-        imgposter = (ImageView) view.findViewById(R.id.imgposter);
+        tvgenre = (TextView) findViewById(R.id.tvgenre);
+        tvtitle = (TextView) findViewById(R.id.tvtitle);
+        tvexplain = (TextView) findViewById(R.id.tvexplain);
+        imgposter = (ImageView) findViewById(R.id.imgposter);
+        btnback = (Button) findViewById(R.id.btnback);
 
         tvexplain.setMovementMethod(new ScrollingMovementMethod());
 
@@ -55,8 +60,15 @@ public class MovieRecommendActivity extends Fragment {
 
         }
 
+        btnback.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MenuMainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-        return view;
 
     }
 

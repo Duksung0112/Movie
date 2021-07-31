@@ -10,12 +10,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import java.io.ByteArrayOutputStream;
 
-public class MovieInformationActivity extends Activity {
+public class MovieInformationActivity extends Fragment {
     TextView tvgenre, tvtitle, tvcontent;
     ImageView imgposter;
     MovieHelper openHelper;
@@ -23,16 +28,17 @@ public class MovieInformationActivity extends Activity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_information);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        openHelper = new MovieHelper(this);
+        View view = inflater.inflate(R.layout.movie_information, container, false);
+
+        openHelper = new MovieHelper(getActivity());
         db = openHelper.getWritableDatabase();
-        tvgenre = (TextView) findViewById(R.id.tvgenre);
-        tvtitle = (TextView) findViewById(R.id.tvtitle);
-        tvcontent = (TextView) findViewById(R.id.tvcontent);
-        imgposter = (ImageView) findViewById(R.id.imgposter);
+        tvgenre = (TextView) view.findViewById(R.id.tvgenre);
+        tvtitle = (TextView) view.findViewById(R.id.tvtitle);
+        tvcontent = (TextView) view.findViewById(R.id.tvcontent);
+        imgposter = (ImageView) view.findViewById(R.id.imgposter);
 
         tvcontent.setMovementMethod(new ScrollingMovementMethod());
 
@@ -96,7 +102,7 @@ public class MovieInformationActivity extends Activity {
 
 
 
-
+        return view;
 
     }
 
