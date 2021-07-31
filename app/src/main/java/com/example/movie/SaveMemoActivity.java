@@ -1,19 +1,23 @@
 package com.example.movie;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.movie.Room.AppDatabase;
 import com.example.movie.Room.User;
 
-public class SaveMemoActivity extends AppCompatActivity {
+public class SaveMemoActivity extends Fragment {
 
     private final int REQUEST_CODE = 200;
     private EditText description;
@@ -21,26 +25,24 @@ public class SaveMemoActivity extends AppCompatActivity {
     private AppDatabase db;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_save_memo);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_save_memo, container, false);
 
-        initialized();
+        description = (EditText) view.findViewById(R.id.description);
+        result = (TextView) view.findViewById(R.id.result);
+
+        db = AppDatabase.getInstance(getActivity());
+
+        return view;
     }
 
-    private void initialized() {
-        description = findViewById(R.id.description);
-        result = findViewById(R.id.result);
 
-        db = AppDatabase.getInstance(this);
-
-    }
 
     //메모저장하는 버튼
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.add_memo_menu, menu);
-        return true;
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -57,8 +59,8 @@ public class SaveMemoActivity extends AppCompatActivity {
 
     private void make_title() {
 
-        EditText editText = new EditText(getApplicationContext());
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        EditText editText = new EditText(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("제목을 입력하세요");
         builder.setView(editText);
 
@@ -67,9 +69,9 @@ public class SaveMemoActivity extends AppCompatActivity {
             // db에 저장하기
             User memo = new User(s, description.getText().toString());
             db.userDao().insert(memo);
-            Toast.makeText(getApplicationContext(),"저장되었습니다",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"저장되었습니다",Toast.LENGTH_SHORT).show();
             dialog.dismiss();
-            finish();
+            //finish();
         });
 
         builder.setNegativeButton("취소", (dialog, which) -> {

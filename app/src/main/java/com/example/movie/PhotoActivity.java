@@ -17,8 +17,9 @@ import androidx.core.app.ActivityCompat;
 
 public class PhotoActivity extends AppCompatActivity {
     final private static String TAG = "GILBOMI";
-    Button btn_photo;
+    Button btn_photo, btn_result;
     ImageView img_photo;
+    MovieRecommendActivity fragment1;
 
     final static int TAKE_PICTURE = 1;
 
@@ -32,6 +33,8 @@ public class PhotoActivity extends AppCompatActivity {
 
         img_photo = findViewById(R.id.img_photo);
         btn_photo = findViewById(R.id.btn_photo);
+        btn_result = findViewById(R.id.btn_result);
+        fragment1 = new MovieRecommendActivity();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA) ==
@@ -58,6 +61,16 @@ public class PhotoActivity extends AppCompatActivity {
                             break;
 
                 }
+            }
+
+        });
+
+        btn_result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(PhotoActivity.this, MovieRecommendActivity.class));
+                finish();
+
             }
 
         });

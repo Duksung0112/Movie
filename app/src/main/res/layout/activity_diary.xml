@@ -5,7 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DiaryActivity">
+    tools:context=".DiaryActivity"
+    android:id="@+id/tabDiary">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainRecyclerView"

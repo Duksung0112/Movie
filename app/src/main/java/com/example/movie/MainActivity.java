@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(cursor.getCount() == 1) {
                     Toast.makeText(MainActivity.this, id + "님 환영합니다", Toast.LENGTH_SHORT).show();
+
                     startActivity(new Intent(MainActivity.this, MenuMainActivity.class));
                     finish();
                 } else {

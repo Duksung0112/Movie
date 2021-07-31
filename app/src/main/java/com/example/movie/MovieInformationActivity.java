@@ -10,12 +10,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import java.io.ByteArrayOutputStream;
 
-public class MovieInformationActivity extends Activity {
+public class MovieInformationActivity extends Fragment {
     TextView tvgenre, tvtitle, tvcontent;
     ImageView imgposter;
     MovieHelper openHelper;
@@ -23,16 +28,17 @@ public class MovieInformationActivity extends Activity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_information);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        openHelper = new MovieHelper(this);
+        View view = inflater.inflate(R.layout.movie_information, container, false);
+
+        openHelper = new MovieHelper(getActivity());
         db = openHelper.getWritableDatabase();
-        tvgenre = (TextView) findViewById(R.id.tvgenre);
-        tvtitle = (TextView) findViewById(R.id.tvtitle);
-        tvcontent = (TextView) findViewById(R.id.tvcontent);
-        imgposter = (ImageView) findViewById(R.id.imgposter);
+        tvgenre = (TextView) view.findViewById(R.id.tvgenre);
+        tvtitle = (TextView) view.findViewById(R.id.tvtitle);
+        tvcontent = (TextView) view.findViewById(R.id.tvcontent);
+        imgposter = (ImageView) view.findViewById(R.id.imgposter);
 
         tvcontent.setMovementMethod(new ScrollingMovementMethod());
 
@@ -51,6 +57,28 @@ public class MovieInformationActivity extends Activity {
                 " 아들 ‘피터’와 딸 ‘찰리’에게까지 이어진 저주의 실체가 정체를 드러내는데…");
         p.bindBlob(3, poster);
         p.bindString(4, "공포");
+        p.execute();
+
+
+        byte[] poster2 = getByteArrayFromDrawable(getResources().getDrawable(R.drawable.movie_image2));
+
+        p.bindString(1, "어바웃 타임");
+        p.bindString(2, "모태솔로 팀(돔놀 글리슨)은 성인이 된 날, 아버지(빌 나이)로부터 놀랄만한 가문의 비밀을 듣게 된다.\n" +
+                " 바로 시간을 되돌릴 수 있는 능력이 있다는 것!\n" +
+                " 그것이 비록 히틀러를 죽이거나 여신과 뜨거운 사랑을 할 수는 없지만,\n" +
+                " 여자친구는 만들어 줄 순 있으리..\n" +
+                " \n" +
+                " 꿈을 위해 런던으로 간 팀은 우연히 만난 사랑스러운 여인 메리에게 첫눈에 반하게 된다.\n" +
+                " 그녀의 사랑을 얻기 위해 자신의 특별한 능력을 마음껏 발휘하는 팀.\n" +
+                " 어설픈 대시, 어색한 웃음은 리와인드! 뜨거웠던 밤은 더욱 뜨겁게 리플레이!\n" +
+                " 꿈에 그리던 그녀와 매일매일 최고의 순간을 보낸다.\n" +
+                " \n" +
+                " 하지만 그와 그녀의 사랑이 완벽해질수록 팀을 둘러싼 주변 상황들은 미묘하게 엇갈리고,\n" +
+                " 예상치 못한 사건들이 여기저기 나타나기 시작하는데…\n" +
+                " \n" +
+                " 어떠한 순간을 다시 살게 된다면, 과연 완벽한 사랑을 이룰 수 있을까?");
+        p.bindBlob(3, poster2);
+        p.bindString(4, "로맨스");
         p.execute();
 
 
@@ -74,7 +102,7 @@ public class MovieInformationActivity extends Activity {
 
 
 
-
+        return view;
 
     }
 

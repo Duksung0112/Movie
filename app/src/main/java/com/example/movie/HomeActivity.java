@@ -1,6 +1,7 @@
 package com.example.movie;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -11,19 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Field;
 
 public class HomeActivity extends Fragment {
 
-
+    Button btstart;
     MovieHelper openHelper;
     SQLiteDatabase db;
+    FloatingActionButton add;
 
     public HomeActivity() {
         // Required empty public constructor
@@ -38,6 +46,8 @@ public class HomeActivity extends Fragment {
         ListView listView = (ListView)view.findViewById(R.id.movie_list);
         openHelper = new MovieHelper(getActivity());
         db = openHelper.getWritableDatabase();
+        btstart = (Button) view.findViewById(R.id.btstart);
+        add = (FloatingActionButton) view.findViewById(R.id.add);
 
         MyAdapter mMyAdapter = new MyAdapter();
 
@@ -82,6 +92,32 @@ public class HomeActivity extends Fragment {
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             // silently fail...
         }
+
+        btstart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), PhotoActivity.class));
+
+
+            }
+
+        });
+
+        View.OnClickListener allMovieOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new aMovieActivity()).commit();
+
+            }
+        };
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "전체 영화 리스트", Snackbar.LENGTH_LONG)
+                        .setAction("AllMovie", allMovieOnClickListener).show();
+            }
+        });
 
 
 
