@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".MainActivity">
@@ -23,6 +24,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".PhotoActivity"/>
+        <activity android:name=".DiaryActivity" />
+        <activity android:name=".SaveMemoActivity"/>
+        <activity android:name=".DetailActivity"/>
+        <activity android:name=".aMovieActivity"/>
+
         <activity
             android:name=".JoinActivity">
         </activity>
@@ -34,6 +41,14 @@
         <activity android:name=".MenuMainActivity"/>
 
 
+
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-feature    android:name="android.hardware.camera"
+                    android:required="true"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

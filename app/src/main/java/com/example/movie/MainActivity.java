@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         openHelper = new UserHelper(this);
         db = openHelper.getWritableDatabase();
         edtId= (EditText) findViewById(R.id.edtId);
@@ -67,12 +68,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }) ;
-
-
-
-
-
-
 
 
 
