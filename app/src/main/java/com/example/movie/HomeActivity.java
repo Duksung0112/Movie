@@ -16,8 +16,13 @@ import android.widget.Button;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -25,7 +30,7 @@ import java.lang.reflect.Field;
 
 public class HomeActivity extends Fragment {
 
-
+    Button btstart;
     MovieHelper openHelper;
     SQLiteDatabase db;
     FloatingActionButton add;
@@ -44,30 +49,8 @@ public class HomeActivity extends Fragment {
         ListView listView = (ListView)view.findViewById(R.id.movie_list);
         openHelper = new MovieHelper(getActivity());
         db = openHelper.getWritableDatabase();
-
-        Button btn_start = (Button)view.findViewById(R.id.btn_start);
-        btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),PhotoActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        /*Button add = (Button)view.findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),aMovieActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        add = getView().findViewById(R.id.add);
-        add.setOnClickListener(v -> {
-            move();
-        });*/
-
+        btstart = (Button) view.findViewById(R.id.btstart);
+        add = (FloatingActionButton) view.findViewById(R.id.add);
 
 
         MyAdapter mMyAdapter = new MyAdapter();
@@ -111,6 +94,32 @@ public class HomeActivity extends Fragment {
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             // silently fail...
         }
+
+        btstart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), PhotoActivity.class));
+
+
+            }
+
+        });
+
+        View.OnClickListener allMovieOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new aMovieActivity()).commit();
+
+            }
+        };
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "전체 영화 리스트", Snackbar.LENGTH_LONG)
+                        .setAction("AllMovie", allMovieOnClickListener).show();
+            }
+        });
 
 
         return view;

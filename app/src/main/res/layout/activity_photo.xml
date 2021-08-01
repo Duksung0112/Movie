@@ -16,4 +16,12 @@
         android:id="@+id/btn_photo"
         android:text="카메라">
     </Button>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_result"
+        android:layout_marginTop="70dp"
+        android:text="결과보기">
+    </Button>
 </LinearLayout>

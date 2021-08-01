@@ -50,7 +50,7 @@
         android:textSize="20dp"
         android:textColor="@color/black"
         android:backgroundTint="#f7dc4f"
-        android:id="@+id/btn_start"/>
+        android:id="@+id/btstart"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

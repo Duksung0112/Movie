@@ -12,12 +12,26 @@
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Movie"
+        android:text="MUVI"
         android:textSize="60dp"
         android:textColor="#8c8d91"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:layout_margin="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="26dp"
+        />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="MUVI"
+        android:textSize="60dp"
+        android:textColor="#8c8d91"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="26dp"
+
         />
 
     <EditText
