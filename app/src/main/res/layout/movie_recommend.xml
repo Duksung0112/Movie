@@ -45,7 +45,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="340dp"
+            android:layout_height="300dp"
             android:layout_marginTop="20dp"
             android:id="@+id/imgposter"
             />
@@ -64,7 +64,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="돌아가기"
             android:textSize="20dp"
             android:backgroundTint="#f7dc4f"
