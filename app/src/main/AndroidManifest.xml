@@ -11,6 +11,8 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
 
+
+
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".MainActivity">
@@ -34,12 +36,8 @@
             android:name=".JoinActivity">
         </activity>
 
-        <activity
-            android:name=".MovieInformationActivity">
-        </activity>
-
         <activity android:name=".MenuMainActivity"/>
-
+        <activity android:name=".Retrofit" />
 
 
     </application>

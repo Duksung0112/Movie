@@ -6,7 +6,7 @@
     android:background="#fffcf3">
 
     <ImageView android:id="@+id/img_photo"
-        android:layout_height="500dp"
+        android:layout_height="520dp"
         android:layout_width="match_parent">
     </ImageView>
 
@@ -18,10 +18,13 @@
     </Button>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="30dp"
+        android:text="결과보기"
+        android:textSize="20dp"
+        android:textColor="@color/black"
         android:id="@+id/btn_result"
-        android:layout_marginTop="70dp"
-        android:text="결과보기">
-    </Button>
+        android:backgroundTint="#f7dc4f"/>
 </LinearLayout>
