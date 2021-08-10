@@ -6,8 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E1E3E4"
-    tools:context=".SaveMemoActivity">
+    tools:context=".SaveMemoActivity"
+    android:orientation="vertical"
+    android:background="#fffcf3">
 
     <ImageView
         android:id="@+id/image"
@@ -19,7 +20,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+
         app:srcCompat="@mipmap/ic_launcher" />
 
     <EditText
