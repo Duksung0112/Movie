@@ -63,18 +63,21 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0-rc01'
 
     // Retrofit 라이브러리
-    implementation 'com.squareup.retrofit2:retrofit:2.6.4'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
 
     // Gson 변환기 라이브러리
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.4'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
 
     // Scalars 변환기 라이브러리
-    implementation 'com.squareup.retrofit2:converter-scalars:2.6.4'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.6.2'
+
 
     // AndroidX를 사용하는 경우
     implementation 'androidx.multidex:multidex:2.0.1'
     // AndroidX를 사용하지 않는 경우
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
 }
 
 configurations {
