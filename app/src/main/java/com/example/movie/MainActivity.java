@@ -19,8 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     EditText edtId, edtPw;
     Button btnLogin, btnJoin;
-    UserHelper openHelper;
-    SQLiteDatabase db;
     String TAG = "Retrofit";
 
     @Override
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Retrofit 인스턴스 생성
         retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("http://3.34.186.243:8081/")    // baseUrl 등록
+                .baseUrl("http://13.124.127.34:8081/")    // baseUrl 등록
                 .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
                 .build();
 
@@ -38,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
         RetrofitService service = retrofit.create(RetrofitService.class);
 
 
-
-        openHelper = new UserHelper(this);
-        db = openHelper.getWritableDatabase();
         edtId= (EditText) findViewById(R.id.edtId);
         edtPw = (EditText) findViewById(R.id.edtPw);
         btnLogin=(Button) findViewById(R.id.btnLogin);
@@ -64,29 +59,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String id = edtId.getText().toString();
                 String pw = edtPw.getText().toString();
-
-
-                /*
-                String sql = "select * from userinfo where id = '"+ id + "' and pw = '" + pw+ "';";
-                Cursor cursor = db.rawQuery(sql, null);
-                while (cursor.moveToNext()) {
-                    String no = cursor.getString(0);
-                    String rest_id = cursor.getString(1);
-                    Log.d("select", "no : " + no + "\nrest_id : " + rest_id);
-                }
-                if(cursor.getCount() == 1) {
-                    Toast.makeText(MainActivity.this, id + "님 환영합니다", Toast.LENGTH_SHORT).show();
-
-                    startActivity(new Intent(MainActivity.this, MenuMainActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(MainActivity.this, "아이디 또는 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                }
-                cursor.close();
-
-
-                 */
-
 
                 Call<PostResultUserInfo> call = service.getId(id);
 
