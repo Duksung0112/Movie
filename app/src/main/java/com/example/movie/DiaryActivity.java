@@ -1,8 +1,11 @@
 package com.example.movie;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -39,6 +42,21 @@ public class DiaryActivity extends Fragment {
     private RecyclerAdapter adapter;
     private List<User> users;
     String TAG = "Retrofit";
+    MenuMainActivity activity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        activity = (MenuMainActivity) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        activity = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,20 +69,7 @@ public class DiaryActivity extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         adapter = new RecyclerAdapter();
 
-        //Retrofit 인스턴스 생성
-        retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("http://3.34.186.243:8081/")    // baseUrl 등록
-                .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
-                .build();
 
-        // 레트로핏 인터페이스 객체 구현
-        RetrofitService service = retrofit.create(RetrofitService.class);
-
-        users = AppDatabase.getInstance(getActivity()).userDao().getAll();
-        int size = users.size();
-        for(int i = 0; i < size; i++){
-            adapter.addItem(users.get(i));
-        }
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -84,6 +89,7 @@ public class DiaryActivity extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "SaveMemo", Snackbar.LENGTH_LONG)
                         .setAction("Go", SaveMemoOnClickListener).show();
+
 
                 /*Call<PostResultUserInfo> call = service.getId(id);
 

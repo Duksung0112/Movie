@@ -26,6 +26,11 @@ public class SaveMemoActivity extends Fragment {
     private TextView result;
     private AppDatabase db;
 
+    public static SaveMemoActivity newInstance() {
+        return new SaveMemoActivity();
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
