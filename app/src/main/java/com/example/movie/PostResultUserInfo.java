@@ -1,6 +1,7 @@
 package com.example.movie;
 
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PostResultUserInfo {
@@ -14,6 +15,13 @@ public class PostResultUserInfo {
 
     @SerializedName("name")
     public String name;
+
+    public PostResultUserInfo(String id, String pw, String name) {
+        this.id = id;
+        this.pw = pw;
+        this.name = name;
+    }
+
 
     // toString()을 Override 해주지 않으면 객체 주소값을 출력함
     @Override

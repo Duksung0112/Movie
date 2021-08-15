@@ -74,6 +74,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // AndroidX를 사용하지 않는 경우
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
 }
 
 configurations {
