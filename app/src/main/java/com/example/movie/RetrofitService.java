@@ -1,6 +1,7 @@
 package com.example.movie;
 
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -27,7 +28,11 @@ public interface RetrofitService {
     @POST("userinfo/add")
     Call<PostResultUserInfo> AddUser(@Body PostResultUserInfo postresultuserinfo);
 
+    @GET("movielist/getbygenre/{genre}")
+    Call<List<PostResultMovie>> getByGenre(@Path("genre") String genre);
 
+    @GET("movielist/getbytitle/{title}")
+    Call<List<PostResultMovie>> getByTitle(@Path("title") String title);
 
 
 
