@@ -1,7 +1,10 @@
 package com.example.movie;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +61,7 @@ public class DiaryActivity extends Fragment {
         activity = null;
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,44 +93,6 @@ public class DiaryActivity extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "SaveMemo", Snackbar.LENGTH_LONG)
                         .setAction("Go", SaveMemoOnClickListener).show();
-
-
-                /*Call<PostResultUserInfo> call = service.getId(id);
-
-                call.enqueue(new Callback<PostResultUserInfo>() {
-                    @Override
-                    public void onResponse(Call<PostResultUserInfo> call, Response<PostResultUserInfo> response) {
-                        Log.e(TAG, "onResponse");
-                        if(response.isSuccessful()){
-                            Log.e(TAG, "onResponse success");
-                            PostResultUserInfo result = response.body();
-
-                            if (pw.equals(result.pw)) {
-
-                                Toast.makeText(MainActivity.this, id + "님 환영합니다", Toast.LENGTH_SHORT).show();
-
-                                startActivity(new Intent(MainActivity.this, MenuMainActivity.class));
-                                finish();
-
-                            } else {
-                                Toast.makeText(MainActivity.this, "아이디 또는 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                            }
-
-
-                        }
-                        else{
-                            // 실패
-                            Log.e(TAG, "onResponse fail");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<PostResultUserInfo> call, Throwable t) {
-                        // 통신 실패
-                        Log.e(TAG, "onFailure: " + t.getMessage());
-                    }
-                });*/
-
             }
         });
 
