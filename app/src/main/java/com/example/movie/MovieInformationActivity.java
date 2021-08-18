@@ -25,13 +25,16 @@ import org.jsoup.select.Elements;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MovieInformationActivity extends Fragment {
-    TextView tvgenre, tvtitle, tvcontent, tvstar;
+    String genre, title, synopsis, star, poster_image;
+    TextView tvgenre, tvtitle, tvsynopsis, tvstar;
     ImageView imgposter;
-    MovieHelper openHelper;
-    SQLiteDatabase db;
-
+    Bitmap bitmap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,43 +42,57 @@ public class MovieInformationActivity extends Fragment {
 
         View view = inflater.inflate(R.layout.movie_information, container, false);
 
-        openHelper = new MovieHelper(getActivity());
-        db = openHelper.getWritableDatabase();
         tvgenre = (TextView) view.findViewById(R.id.tvgenre);
         tvtitle = (TextView) view.findViewById(R.id.tvtitle);
-        tvcontent = (TextView) view.findViewById(R.id.tvcontent);
+        tvsynopsis = (TextView) view.findViewById(R.id.tvcontent);
         tvstar = (TextView) view.findViewById(R.id.tvstar);
         imgposter = (ImageView) view.findViewById(R.id.imgposter);
 
-        tvcontent.setMovementMethod(new ScrollingMovementMethod());
+        tvsynopsis.setMovementMethod(new ScrollingMovementMethod());
 
 
+        if (getArguments() != null)
+        {
+            genre = getArguments().getString("genre"); // 프래그먼트1에서 받아온 값 넣기
+            title = getArguments().getString("title"); // 프래그먼트1에서 받아온 값 넣기
+            synopsis = getArguments().getString("synopsis"); // 프래그먼트1에서 받아온 값 넣기
+            star = getArguments().getString("star"); // 프래그먼트1에서 받아온 값 넣기
+            poster_image = getArguments().getString("poster_image"); // 프래그먼트1에서 받아온 값 넣기
 
-        // Movie 불러오기
-        Cursor res = db.rawQuery("select * from movie where genre='공포'", null);
+            System.out.println(genre);
 
-        while(res.moveToNext()) {
-            tvgenre.setText("[" + res.getString(4) + "] ");
-            tvtitle.setText(res.getString(1));
-            tvcontent.setText(res.getString(2));
-            imgposter.setImageBitmap(getAppIcon(res.getBlob(3)));
+            tvgenre.setText("[" + genre + "] ");
+            tvtitle.setText(title);
+            tvsynopsis.setText(synopsis);
+            tvstar.setText(star);
+
+            Thread uThread = new Thread() {
+                @Override
+                public void run(){
+                    try{
+                        //서버에 올려둔 이미지 URL
+                        URL url = new URL("http://52.79.129.64" + poster_image);
+                        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                        conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                        conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                        InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                        bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                    }catch (MalformedURLException e){
+                        e.printStackTrace();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            };
+            uThread.start(); // 작업 Thread 실행
+            try{
+                uThread.join();
+                imgposter.setImageBitmap(bitmap);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
 
         }
-
-
-        String url = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=유전";
-        Document doc = null;
-        try {
-            doc = Jsoup.connect(url).get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Elements element = doc.select("div.info_group");
-
-        Element el = element.get(2);
-        
-        tvstar.setText("(" + el.text() + "★)");
-
 
 
 
@@ -84,17 +101,6 @@ public class MovieInformationActivity extends Fragment {
         return view;
 
     }
-
-
-
-    public Bitmap getAppIcon(byte[] b) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(b,0,b.length);
-
-        return bitmap;
-    }
-
-
-
 
 
 }
