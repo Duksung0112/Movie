@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Retrofit 인스턴스 생성
         retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("http://3.38.103.7:8081/")    // baseUrl 등록
+                .baseUrl("http://52.79.129.64:8081/")    // baseUrl 등록
                 .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
                 .build();
 
