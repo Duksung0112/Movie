@@ -23,6 +23,13 @@ public class PostResultWishlist {
     @SerializedName("genre")
     public String genre;
 
+    public PostResultWishlist(String title, String synopsis, String poster_image, String genre) {
+        this.title = title;
+        this.synopsis = synopsis;
+        this.poster_image = poster_image;
+        this.genre = genre;
+    }
+
     // toString()을 Override 해주지 않으면 객체 주소값을 출력함
     @Override
     public String toString() {

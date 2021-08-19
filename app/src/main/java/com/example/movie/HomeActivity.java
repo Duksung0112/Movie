@@ -11,9 +11,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListPopupWindow;
@@ -28,14 +30,24 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeActivity extends Fragment {
-
+    String TAG = "Retrofit homeactivity";
     Button btstart;
-    MovieHelper openHelper;
-    SQLiteDatabase db;
     FloatingActionButton add;
+    Bitmap bitmap;
 
     public HomeActivity() {
         // Required empty public constructor
@@ -47,9 +59,16 @@ public class HomeActivity extends Fragment {
 
         View view = inflater.inflate(R.layout.home, container, false);
 
+        //Retrofit 인스턴스 생성
+        retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
+                .baseUrl("http://52.79.129.64:8081/")    // baseUrl 등록
+                .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
+                .build();
+
+        // 레트로핏 인터페이스 객체 구현
+        RetrofitService service = retrofit.create(RetrofitService.class);
+
         ListView listView = (ListView)view.findViewById(R.id.movie_list);
-        openHelper = new MovieHelper(getActivity());
-        db = openHelper.getWritableDatabase();
         btstart = (Button) view.findViewById(R.id.btstart);
         add = (FloatingActionButton) view.findViewById(R.id.add);
 
@@ -57,69 +76,11 @@ public class HomeActivity extends Fragment {
 
         if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
-        db.execSQL("delete from movie where title='유전' or title='어바웃 타임'");
-
-        // Movie 삽입
-        SQLiteStatement p = db.compileStatement("insert into movie(title, content, poster_image, genre) values(?, ?, ?, ?);");
-
-        byte[] poster = getByteArrayFromDrawable(getResources().getDrawable(R.drawable.movie_image1));
-
-        p.bindString(1, "유전");
-        p.bindString(2, "가족이기에 피할 수 없는 운명이 그들을 덮쳤다!\n" +
-                "‘애니’는 일주일 전 돌아가신 엄마의 유령이 집에 나타나는 것을 느낀다.\n" +
-                " 애니가 엄마와 닮았다며 접근한 수상한 이웃 ‘조안’을 통해 엄마의 비밀을 발견하고,\n" +
-                " 자신이 엄마와 똑같은 일을 저질렀음을 알게 된다.\n" +
-                " 그리고 마침내 애니의 엄마로부터 시작돼\n" +
-                " 아들 ‘피터’와 딸 ‘찰리’에게까지 이어진 저주의 실체가 정체를 드러내는데…");
-        p.bindBlob(3, poster);
-        p.bindString(4, "공포");
-        p.execute();
-
-
-        byte[] poster2 = getByteArrayFromDrawable(getResources().getDrawable(R.drawable.movie_image2));
-
-        p.bindString(1, "어바웃 타임");
-        p.bindString(2, "모태솔로 팀(돔놀 글리슨)은 성인이 된 날, 아버지(빌 나이)로부터 놀랄만한 가문의 비밀을 듣게 된다.\n" +
-                " 바로 시간을 되돌릴 수 있는 능력이 있다는 것!\n" +
-                " 그것이 비록 히틀러를 죽이거나 여신과 뜨거운 사랑을 할 수는 없지만,\n" +
-                " 여자친구는 만들어 줄 순 있으리..\n" +
-                " \n" +
-                " 꿈을 위해 런던으로 간 팀은 우연히 만난 사랑스러운 여인 메리에게 첫눈에 반하게 된다.\n" +
-                " 그녀의 사랑을 얻기 위해 자신의 특별한 능력을 마음껏 발휘하는 팀.\n" +
-                " 어설픈 대시, 어색한 웃음은 리와인드! 뜨거웠던 밤은 더욱 뜨겁게 리플레이!\n" +
-                " 꿈에 그리던 그녀와 매일매일 최고의 순간을 보낸다.\n" +
-                " \n" +
-                " 하지만 그와 그녀의 사랑이 완벽해질수록 팀을 둘러싼 주변 상황들은 미묘하게 엇갈리고,\n" +
-                " 예상치 못한 사건들이 여기저기 나타나기 시작하는데…\n" +
-                " \n" +
-                " 어떠한 순간을 다시 살게 된다면, 과연 완벽한 사랑을 이룰 수 있을까?");
-        p.bindBlob(3, poster2);
-        p.bindString(4, "로맨스");
-        p.execute();
-
-
-        String sql = "select * from movie;";
-        Cursor cursor = db.rawQuery(sql, null);
-
-        while (cursor.moveToNext()) {
-
-            Bitmap posterimg = getAppIcon(cursor.getBlob(3)) ;
-            String title = cursor.getString(1) ;
-
-
-            mMyAdapter.addItem(posterimg, title);
-
-        }
-
-
-        listView.setAdapter(mMyAdapter);
-
-
 
         Spinner genreSpinner = (Spinner) view.findViewById(R.id.spGenre);
         ArrayAdapter genreAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.genre_choice, android.R.layout.simple_spinner_item);
-        genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.genre_choice, R.layout.spinner_item);
+        genreAdapter.setDropDownViewResource(R.layout.spin_dropdown);
         genreSpinner.setAdapter(genreAdapter);
 
         try {
@@ -136,6 +97,346 @@ public class HomeActivity extends Fragment {
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             // silently fail...
         }
+
+
+        // 스피너에서 선택 했을 경우 이벤트 처리
+        genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // 전체 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getWishlist();
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+
+                if (position == 1) { // 코미디 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("코미디");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+
+                if (position == 2) { // 로맨스 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("로맨스");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+
+                if (position == 3) { // 액션 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+
+                if (position == 4) { // 공포 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("공포");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
 
         btstart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,26 +465,7 @@ public class HomeActivity extends Fragment {
         });
 
 
-
-
-
-
-
         return view;
     }
 
-    public Bitmap getAppIcon(byte[] b) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(b,0,b.length);
-
-        return bitmap;
-    }
-
-    public byte[] getByteArrayFromDrawable(Drawable d) {
-        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] data = stream.toByteArray();
-
-        return data;
-    }
 }

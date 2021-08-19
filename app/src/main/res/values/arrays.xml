@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="genre_choice">
-        <item>전체</item>
+        <item>전체 장르</item>
         <item>코미디</item>
         <item>로맨스</item>
         <item>액션</item>
