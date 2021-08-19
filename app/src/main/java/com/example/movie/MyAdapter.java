@@ -76,6 +76,16 @@ public class MyAdapter extends BaseAdapter {
 
     }
 
+    /* 아이템 데이터 추가를 위한 함수. 자신이 원하는대로 작성 */
+    public void clearItem() {
+
+        MyItem mItem = new MyItem();
+
+        /* mItems에 MyItem을 추가한다. */
+        mItems.clear();
+
+    }
+
 
 
 }

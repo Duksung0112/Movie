@@ -1,6 +1,7 @@
 package com.example.movie;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -10,13 +11,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,11 +35,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MovieInformationActivity extends Fragment {
     String genre, title, synopsis, star, poster_image;
     TextView tvgenre, tvtitle, tvsynopsis, tvstar;
     ImageView imgposter;
     Bitmap bitmap;
+    Button btadd;
+    String TAG = "Retrofit movieinfo";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,11 +54,21 @@ public class MovieInformationActivity extends Fragment {
 
         View view = inflater.inflate(R.layout.movie_information, container, false);
 
+        //Retrofit 인스턴스 생성
+        retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
+                .baseUrl("http://52.79.129.64:8081/")    // baseUrl 등록
+                .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
+                .build();
+
+        // 레트로핏 인터페이스 객체 구현
+        RetrofitService service = retrofit.create(RetrofitService.class);
+
         tvgenre = (TextView) view.findViewById(R.id.tvgenre);
         tvtitle = (TextView) view.findViewById(R.id.tvtitle);
         tvsynopsis = (TextView) view.findViewById(R.id.tvcontent);
         tvstar = (TextView) view.findViewById(R.id.tvstar);
         imgposter = (ImageView) view.findViewById(R.id.imgposter);
+        btadd = (Button) view.findViewById(R.id.btadd);
 
         tvsynopsis.setMovementMethod(new ScrollingMovementMethod());
 
@@ -92,7 +114,47 @@ public class MovieInformationActivity extends Fragment {
                 e.printStackTrace();
             }
 
+
+            btadd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    PostResultWishlist postresultwishlist = new PostResultWishlist(title, synopsis, poster_image, genre);
+
+                    Call<PostResultWishlist> call = service.AddWishlist(postresultwishlist);
+
+                    call.enqueue(new Callback<PostResultWishlist>() {
+                        @Override
+                        public void onResponse(Call<PostResultWishlist> call, Response<PostResultWishlist> response) {
+                            Log.e(TAG, "onResponse");
+                            if(response.isSuccessful()){
+                                Log.e(TAG, "onResponse success");
+                                Toast.makeText(getActivity(), "위시리스트에 추가되었습니다", Toast.LENGTH_SHORT).show();
+                                getFragmentManager().beginTransaction().replace(R.id.container, new aMovieActivity()).commit();
+
+                            }
+                            else{
+                                // 실패
+                                Log.e(TAG, "onResponse fail");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<PostResultWishlist> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "onFailure: " + t.getMessage());
+                        }
+                    });
+
+
+                }
+
+            }) ;
+
+
         }
+
+
 
 
 
