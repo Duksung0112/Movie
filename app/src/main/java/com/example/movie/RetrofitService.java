@@ -16,6 +16,10 @@ import retrofit2.http.Path;
 public interface RetrofitService {
 
     // @GET( EndPoint-자원위치(URI) )
+    @POST("userinfo/add")
+    Call<PostResultDiary> AddDiary(@Body PostResultDiary postresultdiary);
+
+
     @GET("userinfo/get/{id}")
     Call<PostResultUserInfo> getId(@Path("id") String id);
 

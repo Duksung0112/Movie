@@ -28,7 +28,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,6 +50,7 @@ public class HomeActivity extends Fragment {
 
     public HomeActivity() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -71,6 +71,7 @@ public class HomeActivity extends Fragment {
         ListView listView = (ListView)view.findViewById(R.id.movie_list);
         btstart = (Button) view.findViewById(R.id.btstart);
         add = (FloatingActionButton) view.findViewById(R.id.add);
+
 
         MyAdapter mMyAdapter = new MyAdapter();
 
@@ -467,5 +468,6 @@ public class HomeActivity extends Fragment {
 
         return view;
     }
+
 
 }

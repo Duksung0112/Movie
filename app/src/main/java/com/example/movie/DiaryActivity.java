@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.movie.Recycler.RecyclerAdapter;
+import com.example.movie.RecyclerAdapter;
 import com.example.movie.Room.AppDatabase;
 import com.example.movie.Room.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -74,15 +74,11 @@ public class DiaryActivity extends Fragment {
         return view;
     }
 
-/*
     @Override
     public void onStart() {
         users = AppDatabase.getInstance(getActivity()).userDao().getAll();
         adapter.addItems((ArrayList) users);
         super.onStart();
     }
-
- */
-
 
 }

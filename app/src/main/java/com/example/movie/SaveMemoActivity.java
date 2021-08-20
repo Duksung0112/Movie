@@ -1,4 +1,5 @@
 package com.example.movie;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.movie.Room.AppDatabase;
 import com.example.movie.Room.User;
@@ -23,6 +26,7 @@ public class SaveMemoActivity extends Fragment {
     private EditText description;
     private TextView result;
     private AppDatabase db;
+    private Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,17 +38,29 @@ public class SaveMemoActivity extends Fragment {
 
         db = AppDatabase.getInstance(getActivity());
 
+        toolbar =(Toolbar)view.findViewById(R.id.memo_toolbar);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+
+        activity.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = activity.getActionBar();
+
+        setHasOptionsMenu(true);
+
         return view;
     }
 
 
 
     //메모저장하는 버튼
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.add_memo_menu, menu);
+        inflater.inflate(R.menu.add_memo_list, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
@@ -71,7 +87,9 @@ public class SaveMemoActivity extends Fragment {
             db.userDao().insert(memo);
             Toast.makeText(getContext(),"저장되었습니다",Toast.LENGTH_SHORT).show();
             dialog.dismiss();
-            //finish();
+
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new DiaryActivity()).addToBackStack(null).commit();
+
         });
 
         builder.setNegativeButton("취소", (dialog, which) -> {
@@ -80,4 +98,7 @@ public class SaveMemoActivity extends Fragment {
 
         builder.show();
     }
+
+
 }
+
