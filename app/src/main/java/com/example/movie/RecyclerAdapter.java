@@ -1,56 +1,88 @@
 package com.example.movie;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.movie.Room.AppDatabase;
+import com.example.movie.DetailActivity;
+import com.example.movie.R;
+import com.example.movie.Room.User;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    public Activity activity;
-    private ArrayList<Diary_item> di;
+
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+
+
+    private ArrayList<User> userData = new ArrayList<>();
+
 
     @NonNull
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.diary_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.memorecycler_itemview,parent,false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.onBind(userData.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return di.size();
+        return userData.size();
     }
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView key, memoTextView1, memoTextView2;
-        public ViewHolder(final View itemView) {
-            super(itemView);
-            key = itemView.findViewById(R.id.key);
-            memoTextView1 = itemView.findViewById(R.id.memoTextView1);
-            memoTextView2 = itemView.findViewById(R.id.memoTextView2);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Context context = itemView.getContext();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("id", getAdapterPosition());
-                    Intent mainIntent = new Intent(context, ModifyActivity.class);
-                    mainIntent.putExtras(bundle);
-                    mainIntent.putExtra("title", di.get(getAdapterPosition()).getTitle());
-                    mainIntent.putExtra("content", di.get(getAdapterPosition()).getContent());
-                    mainIntent.putExtra("itemnum", getAdapterPosition());
-                    context.startActivity(mainIntent);
-                }
+    public void addItem(User user) {
+        userData.add(user);
+        notifyDataSetChanged();
+    }
+
+    public void addItems(ArrayList<User> users) {
+        userData = users;
+        notifyDataSetChanged();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView key;
+        private TextView title;
+        private TextView description;
+
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            key = itemView.findViewById(R.id.key);
+            title = itemView.findViewById(R.id.memoTextView1);
+            description = itemView.findViewById(R.id.memoTextView2);
+        }
+
+        public void onBind(User user, int position) {
+            String s = "" + (position+1);
+            key.setText(s);
+            title.setText(user.getTitle());
+            description.setText(user.getDes());
+
+            itemView.setOnLongClickListener(v -> {
+                userData.remove(user);
+                AppDatabase.getInstance(itemView.getContext()).userDao().delete(user);
+
+                notifyDataSetChanged();
+                return false;
+            });
+
+            itemView.setOnClickListener(v -> {
+
+                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                intent.putExtra("data", user);
+                itemView.getContext().startActivity(intent);
+
             });
         }
     }

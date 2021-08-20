@@ -27,13 +27,9 @@
 
         <activity android:name=".PhotoActivity"/>
         <activity android:name=".MovieRecommendActivity"/>
-
-        <activity
-            android:name=".JoinActivity">
-        </activity>
-
-        <activity android:name=".Retrofit" />
-
+        <activity android:name=".MenuMainActivity"></activity>
+        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".JoinActivity"></activity>
 
     </application>
 

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="80dp"
-        tools:listitem="@layout/diary_item"
+        tools:listitem="@layout/memorecycler_itemview"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

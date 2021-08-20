@@ -2,7 +2,15 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/white"
+    android:background="#E1E3E4"
     android:id="@+id/mytoolbar">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Movie"
+        android:textColor="#000000">
+
+    </TextView>
 
 </androidx.appcompat.widget.Toolbar>

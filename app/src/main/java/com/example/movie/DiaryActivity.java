@@ -1,34 +1,34 @@
 package com.example.movie;
-
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.movie.RecyclerAdapter;
+import com.example.movie.Room.AppDatabase;
+import com.example.movie.Room.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class DiaryActivity extends Fragment {
 
+    private final int SAVE_MEMO_ACTIVITY = 1;
     private FloatingActionButton add;
     private RecyclerView recyclerView;
-    private ArrayList<Diary_item> memoItemList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private RecyclerAdapter adapter;
-    String TAG = "Retrofit";
-    MenuMainActivity activity;
+    private List<User> users;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +39,13 @@ public class DiaryActivity extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.mainRecyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         adapter = new RecyclerAdapter();
+
+        users = AppDatabase.getInstance(getActivity()).userDao().getAll();
+        int size = users.size();
+        for(int i = 0; i < size; i++){
+            adapter.addItem(users.get(i));
+        }
+
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -46,7 +53,7 @@ public class DiaryActivity extends Fragment {
         View.OnClickListener SaveMemoOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new MemoActivity()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new SaveMemoActivity()).commit();
 
             }
         };
@@ -57,31 +64,21 @@ public class DiaryActivity extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "SaveMemo", Snackbar.LENGTH_LONG)
                         .setAction("Go", SaveMemoOnClickListener).show();
+
             }
         });
 
+
+
+
         return view;
-
     }
 
-    private void getUserList(){
-        final DiaryHelper diaryHelper= new DiaryHelper(getActivity().getApplicationContext());
-
-        Cursor cursor = diaryHelper.getUserList();
-
-        int count=0;
-
-        while(cursor.moveToNext()){
-            Diary_item di = new Diary_item();
-            di.setTitle(cursor.getString(0));
-            di.setContent(cursor.getString(1));
-            adapter.addItem(di);
-            count++;
-
-        }
-
+    @Override
+    public void onStart() {
+        users = AppDatabase.getInstance(getActivity()).userDao().getAll();
+        adapter.addItems((ArrayList) users);
+        super.onStart();
     }
-
 
 }
-
