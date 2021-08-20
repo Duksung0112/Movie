@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.movie.Room.AppDatabase;
 import com.example.movie.Room.User;
@@ -86,7 +87,9 @@ public class SaveMemoActivity extends Fragment {
             db.userDao().insert(memo);
             Toast.makeText(getContext(),"저장되었습니다",Toast.LENGTH_SHORT).show();
             dialog.dismiss();
-            //finish();
+
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new DiaryActivity()).addToBackStack(null).commit();
+
         });
 
         builder.setNegativeButton("취소", (dialog, which) -> {
@@ -95,4 +98,7 @@ public class SaveMemoActivity extends Fragment {
 
         builder.show();
     }
+
+
 }
+
