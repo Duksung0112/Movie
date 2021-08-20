@@ -38,6 +38,20 @@ public interface RetrofitService {
     @GET("movielist/getbytitle/{title}")
     Call<List<PostResultMovie>> getByTitle(@Path("title") String title);
 
+    @GET("wishlist/list")
+    Call<List<PostResultWishlist>> getWishlist();
+
+    @POST("wishlist/add")
+    Call<PostResultWishlist> AddWishlist(@Body PostResultWishlist postresultwishlist);
+
+    @GET("wishlist/getbygenre/{genre}")
+    Call<List<PostResultWishlist>> getByWishlistGenre(@Path("genre") String genre);
+
+    @GET("wishlist/getbytitle/{title}")
+    Call<List<PostResultWishlist>> getByWishlistTitle(@Path("title") String title);
+
+
+
 
 
 }

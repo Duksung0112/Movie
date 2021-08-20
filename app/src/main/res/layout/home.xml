@@ -8,17 +8,22 @@
     android:background="#fffcf3"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/wish_list_graphic"/>
+
+
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="35dp"
             android:id="@+id/spGenre"
-            android:backgroundTint="#8c8d91"
-            android:background="#8c8d91"
+            android:background="@drawable/bg_spinner"
         />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="450dp"
         android:fillViewport="true"
         android:id="@+id/movie_scroll"
         >
