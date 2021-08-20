@@ -8,22 +8,48 @@
     android:background="#fffcf3"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:src="@drawable/wish_list_graphic"/>
-
-
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:id="@+id/spGenre"
-            android:background="@drawable/bg_spinner"
+            android:backgroundTint="#8c8d91"
+            android:background="#8c8d91"
         />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginLeft="40dp"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:text="시작하기"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:id="@+id/btstart"
+            android:backgroundTint="#f7dc4f"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@id/add"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="130dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_baseline_add_24"
+
+            />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="500dp"
         android:fillViewport="true"
         android:id="@+id/movie_scroll"
         >
@@ -42,35 +68,6 @@
 
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-    <Button
-        android:layout_marginLeft="40dp"
-        android:layout_width="150dp"
-        android:layout_height="65dp"
-        android:text="시작하기"
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:backgroundTint="#f7dc4f"
-        android:id="@+id/btstart"/>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@id/add"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="130dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_baseline_add_24"
-
-        />
-
-    </LinearLayout>
 
 
 
