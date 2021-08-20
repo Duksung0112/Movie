@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,10 +68,29 @@ public class CloudVision extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cloud_vision);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        mImageDetails = findViewById(R.id.image_details);
+        mMainImage = findViewById(R.id.main_image);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        AlertDialog.Builder builder = new AlertDialog.Builder(CloudVision.this);
+        builder
+                .setMessage(R.string.dialog_select_prompt)
+                .setPositiveButton(R.string.dialog_select_gallery, (dialog, which) -> startGalleryChooser())
+                .setNegativeButton(R.string.dialog_select_camera, (dialog, which) -> startCamera());
+        builder.create().show();
+
+        Button fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(CloudVision.this, MovieRecommendActivity.class));
+                finish();
+            }
+
+        });
+
+/*        Button fab = findViewById(R.id.btn_photo);
         fab.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(CloudVision.this);
             builder
@@ -77,10 +98,8 @@ public class CloudVision extends AppCompatActivity {
                     .setPositiveButton(R.string.dialog_select_gallery, (dialog, which) -> startGalleryChooser())
                     .setNegativeButton(R.string.dialog_select_camera, (dialog, which) -> startCamera());
             builder.create().show();
-        });
+        });*/
 
-        mImageDetails = findViewById(R.id.image_details);
-        mMainImage = findViewById(R.id.main_image);
     }
 
     public void startGalleryChooser() {
@@ -305,16 +324,21 @@ public class CloudVision extends AppCompatActivity {
         List<FaceAnnotation> faces = response.getResponses().get(0).getFaceAnnotations();
         if (faces != null) {
             for (FaceAnnotation face : faces) {
+                message.append("Anger: ");
                 message.append(face.getAngerLikelihood());
                 message.append("\n");
+                message.append("Joy: ");
                 message.append(face.getJoyLikelihood());
                 message.append("\n");
+                message.append("Sorrow: ");
                 message.append(face.getSorrowLikelihood());
                 message.append("\n");
+                message.append("Surprise: ");
                 message.append(face.getSurpriseLikelihood());
                 message.append("\n");
 
                 message.append("\n");
+                message.append("DetectionConfidence: ");
                 message.append(face.getDetectionConfidence());
                 message.append("\n");
             }

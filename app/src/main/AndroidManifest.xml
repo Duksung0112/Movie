@@ -22,6 +22,10 @@
         </activity>
 
         <activity
+            android:name=".CloudVision">
+        </activity>
+
+        <activity
             android:name=".SplashActivity">
             <intent-filter>
                 <action
@@ -41,6 +45,7 @@
 
         <activity android:name=".MenuMainActivity"/>
 
+        <activity android:name=".Retrofit"/>
 
     </application>
 
