@@ -52,7 +52,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:text="분석 내용"
             android:textColor="@color/black"
             android:layout_marginTop="20dp"
