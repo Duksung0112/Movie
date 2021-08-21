@@ -145,10 +145,6 @@ public class JoinActivity extends Activity {
         });
 
 
-
-
-
-
     }
 
 }

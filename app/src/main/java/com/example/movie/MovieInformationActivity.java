@@ -158,8 +158,6 @@ public class MovieInformationActivity extends Fragment {
 
 
 
-
-
         return view;
 
     }

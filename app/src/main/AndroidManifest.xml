@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
-
-
-
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".MainActivity">
@@ -29,14 +26,11 @@
         </activity>
 
         <activity android:name=".PhotoActivity"/>
-        <activity android:name=".DetailActivity"/>
+        <activity android:name=".CloudVision"/>
         <activity android:name=".MovieRecommendActivity"/>
-
-        <activity
-            android:name=".JoinActivity">
-        </activity>
-
-        <activity android:name=".MenuMainActivity"/>
+        <activity android:name=".MenuMainActivity"></activity>
+        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".JoinActivity"></activity>
 
 
     </application>

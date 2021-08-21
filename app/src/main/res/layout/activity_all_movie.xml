@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="600dp"
     android:layout_margin="10dp"
+    android:background="#fffcf3">
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,6 @@
             android:src="@drawable/movie_camera"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"/>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="코미디"
+                android:textColor="@color/black"
                 android:id="@+id/tvgenre1"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -73,6 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="로맨스"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -106,6 +108,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="액션"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -139,7 +142,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="공포"/>
+                android:text="공포"
+                android:textColor="@color/black"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -159,6 +163,5 @@
         </LinearLayout>
     </HorizontalScrollView>
     </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

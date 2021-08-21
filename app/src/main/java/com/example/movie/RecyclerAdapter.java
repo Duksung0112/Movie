@@ -1,4 +1,4 @@
-package com.example.movie.Recycler;
+package com.example.movie;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;

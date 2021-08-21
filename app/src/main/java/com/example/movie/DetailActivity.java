@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.movie.Room.AppDatabase;
 import com.example.movie.Room.User;
@@ -34,6 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+
         initialized();
 
         update.setOnClickListener(v -> {
@@ -43,9 +45,11 @@ public class DetailActivity extends AppCompatActivity {
             db.userDao().update(title, des, id);
             finish();
         });
+
         exit.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplication(), DiaryActivity.class);
+            Intent intent = new Intent(getApplication(), MenuMainActivity.class);
             startActivity(intent);
+
         });
     }
 
