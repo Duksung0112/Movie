@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fffcf3"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="20dp"
+        android:orientation="vertical"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[장르] "
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvgenre"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="영화제목"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginTop="10dp"
+                android:id="@+id/tvtitle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(평점 : )"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginTop="10dp"
+                android:id="@+id/tvstar"
+                android:layout_marginLeft="5dp"/>
+
+
+
+         </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="270dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/imgposter"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:text="줄거리"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:id="@+id/tvcontent"
+            android:scrollbars="vertical"
+
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:text="위시리스트에 추가"
+            android:textSize="20dp"
+            android:backgroundTint="#f7dc4f"
+            android:id="@+id/btadd"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

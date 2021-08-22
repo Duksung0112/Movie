@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#fffcf3">
+
+    <ImageView android:id="@+id/img_photo"
+        android:layout_height="520dp"
+        android:layout_width="match_parent">
+    </ImageView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_photo"
+        android:text="카메라">
+    </Button>
+
+    <Button
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="15dp"
+        android:text="결과보기"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:id="@+id/btn_result"
+        android:backgroundTint="#f7dc4f"/>
+</LinearLayout>
