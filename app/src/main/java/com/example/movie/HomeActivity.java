@@ -441,7 +441,7 @@ public class HomeActivity extends Fragment {
         btstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), PhotoActivity.class));
+                startActivity(new Intent(getActivity(), CloudVision.class));
 
 
             }
