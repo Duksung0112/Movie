@@ -320,16 +320,20 @@ public class CloudVision extends AppCompatActivity {
         if (faces != null) {
             for (FaceAnnotation face : faces) {
                 message.append("Anger: ");
-                message.append(face.getAngerLikelihood());
+                String anger=output(face.getAngerLikelihood());
+                message.append(anger);
                 message.append("\n");
                 message.append("Joy: ");
-                message.append(face.getJoyLikelihood());
+                String joy=output(face.getJoyLikelihood());
+                message.append(joy);
                 message.append("\n");
                 message.append("Sorrow: ");
-                message.append(face.getSorrowLikelihood());
+                String sorrow=output(face.getSorrowLikelihood());
+                message.append(sorrow);
                 message.append("\n");
                 message.append("Surprise: ");
-                message.append(face.getSurpriseLikelihood());
+                String surprise=output(face.getSurpriseLikelihood());
+                message.append(surprise);
                 message.append("\n");
 
 /*                message.append("\n");
@@ -342,5 +346,16 @@ public class CloudVision extends AppCompatActivity {
         }
 
         return message.toString();
+    }
+
+    private static String output(String likelihood){
+        String result="검출할 수 없습니다.";
+        if (likelihood.equals("VERY_LIKELY")) result ="★★★★★";
+        else if (likelihood.equals("LIKELY")) result ="★★★★";
+        else if (likelihood.equals("POSSIBLE")) result ="★★★";
+        else if (likelihood.equals("UNLIKELY")) result ="★★";
+        else if (likelihood.equals("VERY_UNLIKELY")) result ="★";
+
+        return result;
     }
 }
