@@ -21,8 +21,7 @@ import java.io.ByteArrayOutputStream;
 public class MovieRecommendActivity extends AppCompatActivity {
     TextView tvgenre, tvtitle, tvexplain;
     ImageView imgposter;
-    MovieHelper openHelper;
-    SQLiteDatabase db;
+
     Button btnback;
 
     public MovieRecommendActivity() {
@@ -35,8 +34,6 @@ public class MovieRecommendActivity extends AppCompatActivity {
         setContentView(R.layout.movie_recommend);
 
 
-        openHelper = new MovieHelper(this);
-        db = openHelper.getWritableDatabase();
         tvgenre = (TextView) findViewById(R.id.tvgenre);
         tvtitle = (TextView) findViewById(R.id.tvtitle);
         tvexplain = (TextView) findViewById(R.id.tvexplain);
@@ -47,6 +44,7 @@ public class MovieRecommendActivity extends AppCompatActivity {
 
 
         // Movie 불러오기
+        /*
         Cursor res = db.rawQuery("select * from movie where genre='공포'", null);
 
         while(res.moveToNext()) {
@@ -55,6 +53,8 @@ public class MovieRecommendActivity extends AppCompatActivity {
             imgposter.setImageBitmap(getAppIcon(res.getBlob(3)));
 
         }
+
+         */
 
         btnback.setOnClickListener(new View.OnClickListener(){
             @Override
