@@ -48,6 +48,7 @@ public class HomeActivity extends Fragment {
     Button btstart;
     FloatingActionButton add;
     Bitmap bitmap;
+    String base = "http://3.36.121.174";
 
     public HomeActivity() {
         // Required empty public constructor
@@ -61,7 +62,7 @@ public class HomeActivity extends Fragment {
 
         //Retrofit 인스턴스 생성
         retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("http://52.79.129.64:8081/")    // baseUrl 등록
+                .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
                 .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
                 .build();
 
@@ -126,7 +127,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -191,7 +192,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -256,7 +257,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -321,7 +322,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -386,7 +387,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -451,7 +452,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -516,7 +517,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -580,7 +581,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -645,7 +646,7 @@ public class HomeActivity extends Fragment {
                                         public void run(){
                                             try{
                                                 //서버에 올려둔 이미지 URL
-                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                URL url = new URL(base + item.poster_image);
                                                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                                                 conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                                                 conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
