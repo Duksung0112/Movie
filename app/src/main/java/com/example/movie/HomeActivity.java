@@ -427,6 +427,265 @@ public class HomeActivity extends Fragment {
 
 
                 }
+
+                if (position == 5) { // 판타지 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("판타지");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+
+                if (position == 6) { // 드라마 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("드라마");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+                if (position == 7) { // 공상과학 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("공상과학");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
+
+                if (position == 8) { // 전쟁 장르
+
+                    // 아이템 전체 삭제
+                    mMyAdapter.clearItem();
+                    // listview 갱신
+                    mMyAdapter.notifyDataSetChanged();
+
+                    Call<List<PostResultWishlist>> call = service.getByWishlistGenre("전쟁");
+
+                    call.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+                                List<PostResultWishlist> result = response.body();
+
+                                for (PostResultWishlist item : result) {
+                                    Thread uThread = new Thread() {
+                                        @Override
+                                        public void run(){
+                                            try{
+                                                //서버에 올려둔 이미지 URL
+                                                URL url = new URL("http://52.79.129.64" + item.poster_image);
+                                                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                                conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                                conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                                InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                                bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                            }catch (MalformedURLException e){
+                                                e.printStackTrace();
+                                            }catch (IOException e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    uThread.start(); // 작업 Thread 실행
+                                    try{
+                                        uThread.join();
+                                        mMyAdapter.addItem(bitmap, item.title);
+
+                                    }catch (InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                listView.setAdapter(mMyAdapter);
+
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+
+                }
             }
 
             @Override
