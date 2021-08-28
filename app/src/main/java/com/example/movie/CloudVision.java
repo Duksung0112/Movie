@@ -3,6 +3,7 @@ package com.example.movie;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -38,9 +41,19 @@ import com.google.api.services.vision.v1.model.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class CloudVision extends AppCompatActivity {
@@ -57,8 +70,13 @@ public class CloudVision extends AppCompatActivity {
     public static final int CAMERA_PERMISSIONS_REQUEST = 2;
     public static final int CAMERA_IMAGE_REQUEST = 3;
 
+    private static String angerstar, joystar, sorrowstar, surprisestar;
+
     private TextView mImageDetails;
     private ImageView mMainImage;
+
+    private static String base = "http://3.36.121.174";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +87,1982 @@ public class CloudVision extends AppCompatActivity {
         mImageDetails = findViewById(R.id.image_details);
         mMainImage = findViewById(R.id.main_image);
 
+        //Retrofit 인스턴스 생성
+        retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
+                .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
+                .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
+                .build();
+
+        RetrofitService service = retrofit.create(RetrofitService.class);;
+
         ChooseDialog();
 
         Button fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                startActivity(new Intent(CloudVision.this, MovieRecommendActivity.class));
-                finish();
+
+                if (angerstar.equals("★★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("전쟁");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (joystar.equals("★★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("로맨스");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("판타지");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (sorrowstar.equals("★★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("코미디");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("드라마");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (surprisestar.equals("★★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("공상과학");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+                else if (angerstar.equals("★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("전쟁");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (joystar.equals("★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("로맨스");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("판타지");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (sorrowstar.equals("★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("코미디");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("드라마");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (surprisestar.equals("★★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("공상과학");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (angerstar.equals("★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("전쟁");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (joystar.equals("★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("로맨스");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("판타지");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (sorrowstar.equals("★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("코미디");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("드라마");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (surprisestar.equals("★★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("공상과학");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (angerstar.equals("★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("전쟁");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (joystar.equals("★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("로맨스");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("판타지");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (sorrowstar.equals("★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("코미디");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("드라마");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (surprisestar.equals("★★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("공상과학");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (angerstar.equals("★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("전쟁");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (joystar.equals("★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("로맨스");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("판타지");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (sorrowstar.equals("★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("코미디");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("드라마");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+                else if (surprisestar.equals("★")) {
+
+                    Random rand = new Random();
+                    int j = rand.nextInt(2);
+
+                    if(j == 0) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("액션");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+
+                    else if(j == 1) {
+
+                        Call<List<PostResultWishlist>> call = service.getByWishlistGenre("공상과학");
+
+                        call.enqueue(new Callback<List<PostResultWishlist>>() {
+                            @Override
+                            public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                                Log.e(TAG, "call onResponse");
+                                if (response.isSuccessful()) {
+                                    Log.e(TAG, "call onResponse success");
+                                    List<PostResultWishlist> result = response.body();
+
+                                    Random rand = new Random();
+                                    int i = rand.nextInt(result.size());
+
+                                    MovieRecommendActivity fragment = new MovieRecommendActivity();
+                                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                                    bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
+                                    bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
+                                    bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
+                                            + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
+
+
+                                    FragmentManager fm = getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                                    fragment.setArguments(bundle);
+
+                                    fragmentTransaction.replace(R.id.cloud, fragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    // 실패
+                                    Log.e(TAG, "call onResponse fail");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                                // 통신 실패
+                                Log.e(TAG, "call onFailure: " + t.getMessage());
+                            }
+
+                        });
+                    }
+                }
+
+
+
             }
 
         });
@@ -85,6 +2071,7 @@ public class CloudVision extends AppCompatActivity {
         choose.setOnClickListener(view -> {
             ChooseDialog();
         });
+
 
     }
 
@@ -321,18 +2308,22 @@ public class CloudVision extends AppCompatActivity {
             for (FaceAnnotation face : faces) {
                 message.append("Anger: ");
                 String anger=output(face.getAngerLikelihood());
+                angerstar = anger;
                 message.append(anger);
                 message.append("\n");
                 message.append("Joy: ");
                 String joy=output(face.getJoyLikelihood());
+                joystar = joy;
                 message.append(joy);
                 message.append("\n");
                 message.append("Sorrow: ");
                 String sorrow=output(face.getSorrowLikelihood());
+                sorrowstar = sorrow;
                 message.append(sorrow);
                 message.append("\n");
                 message.append("Surprise: ");
                 String surprise=output(face.getSurpriseLikelihood());
+                surprisestar = surprise;
                 message.append(surprise);
                 message.append("\n");
 
@@ -340,6 +2331,7 @@ public class CloudVision extends AppCompatActivity {
                 message.append("DetectionConfidence: ");
                 message.append(face.getDetectionConfidence());
                 message.append("\n");*/
+
             }
         } else {
             message.append("nothing");

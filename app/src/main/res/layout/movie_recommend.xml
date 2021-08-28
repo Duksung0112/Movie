@@ -48,6 +48,7 @@
             android:layout_height="300dp"
             android:layout_marginTop="20dp"
             android:id="@+id/imgposter"
+            android:layout_gravity="center"
             />
 
         <TextView
