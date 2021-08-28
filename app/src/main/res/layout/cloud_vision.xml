@@ -5,16 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.movie.CloudVision">
+    tools:context="com.example.movie.CloudVision"
+    android:id="@+id/cloud">
 
-    <com.google.android.material.appbar.AppBarLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
-    </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+        <include layout="@layout/content_main"
+        android:layout_height="570dp"
+        android:layout_width="match_parent"/>
 
 <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -27,7 +31,7 @@
         android:id="@+id/choose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="550dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
         android:text="카메라" />
@@ -37,8 +41,10 @@
         android:text="추천받기"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp" />
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
