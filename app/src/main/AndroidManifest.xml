@@ -27,9 +27,7 @@
 
         <activity android:name=".PhotoActivity"/>
         <activity android:name=".CloudVision"/>
-        <activity android:name=".MovieRecommendActivity"/>
         <activity android:name=".MenuMainActivity"></activity>
-        <activity android:name=".DetailActivity"></activity>
         <activity android:name=".JoinActivity"></activity>
 
 
