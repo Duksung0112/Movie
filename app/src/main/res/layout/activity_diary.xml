@@ -1,22 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DiaryActivity"
-    android:background="#fffcf3"
-    android:paddingBottom="100dp"
-    android:id="@+id/tabDiary">
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    android:layout_margin="10dp"
+    android:background="#fffcf3">
+    >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainRecyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="70dp"
-        tools:listitem="@layout/memorecycler_itemview"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="400dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:src="@drawable/diary"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:hint="영화제목"
+                android:textColorHint="@color/black"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="200dp">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@mipmap/ic_launcher"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:hint="영화제목"
+                android:textColorHint="@color/black"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="200dp">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@mipmap/ic_launcher"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:hint="영화제목"
+                android:textColorHint="@color/black"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="200dp">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@mipmap/ic_launcher"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:hint="영화제목"
+                android:textColorHint="@color/black"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="200dp">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@mipmap/ic_launcher"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:hint="영화제목"
+                android:textColorHint="@color/black"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="200dp">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@mipmap/ic_launcher"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:hint="영화제목"
+                android:textColorHint="@color/black"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="200dp">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@mipmap/ic_launcher"/>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

@@ -27,6 +27,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MovieRecommendActivity extends Fragment {
     TextView tvgenre, tvtitle, tvexplain;
     ImageView imgposter;
@@ -35,6 +39,16 @@ public class MovieRecommendActivity extends Fragment {
     String base = "http://3.36.121.174";
     Bitmap bitmap;
     Button btnback;
+
+    //Retrofit 인스턴스 생성
+    retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
+            .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
+            .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
+            .build();
+
+    // 레트로핏 인터페이스 객체 구현
+    RetrofitService service = retrofit.create(RetrofitService.class);
+
 
     public MovieRecommendActivity() {
         // Required empty public constructor
@@ -100,6 +114,8 @@ public class MovieRecommendActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), MenuMainActivity.class));
+
+
             }
         });
 

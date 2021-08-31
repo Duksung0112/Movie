@@ -115,7 +115,7 @@ public class JoinActivity extends Activity {
 
                     Call<PostResultUserInfo> call = service.AddUser(postresultuserinfo);
 
-                    call.enqueue(new Callback<PostResultUserInfo>() {
+                    call.enqueue(new Callback<PostResultUserInfo>() { // 레트로핏으로 보내는것
                         @Override
                         public void onResponse(Call<PostResultUserInfo> call, Response<PostResultUserInfo> response) {
                             if(response.isSuccessful()) {
