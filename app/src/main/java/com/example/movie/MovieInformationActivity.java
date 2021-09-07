@@ -42,6 +42,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieInformationActivity extends Fragment {
     String genre, title, synopsis, star, poster_image;
+    int num;
     TextView tvgenre, tvtitle, tvsynopsis, tvstar;
     ImageView imgposter;
     Bitmap bitmap;
@@ -78,6 +79,7 @@ public class MovieInformationActivity extends Fragment {
         {
             genre = getArguments().getString("genre"); // 프래그먼트1에서 받아온 값 넣기
             title = getArguments().getString("title"); // 프래그먼트1에서 받아온 값 넣기
+            num=getArguments().getInt("num");
             synopsis = getArguments().getString("synopsis"); // 프래그먼트1에서 받아온 값 넣기
             star = getArguments().getString("star"); // 프래그먼트1에서 받아온 값 넣기
             poster_image = getArguments().getString("poster_image"); // 프래그먼트1에서 받아온 값 넣기
@@ -120,7 +122,7 @@ public class MovieInformationActivity extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    PostResultWishlist postresultwishlist = new PostResultWishlist(title, synopsis, poster_image, genre);
+                    PostResultWishlist postresultwishlist = new PostResultWishlist(num, title, synopsis, poster_image, genre);
 
                     Call<PostResultWishlist> call = service.AddWishlist(postresultwishlist);
 
@@ -152,16 +154,9 @@ public class MovieInformationActivity extends Fragment {
 
             }) ;
 
-
         }
-
-
-
-
 
         return view;
 
     }
-
-
 }

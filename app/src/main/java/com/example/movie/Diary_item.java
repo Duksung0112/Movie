@@ -1,31 +1,24 @@
 package com.example.movie;
 
+import android.graphics.Bitmap;
+
 public class Diary_item {
+    private Bitmap posterimg;
     private String title;
-    private String content;
 
-    public Diary_item(){
-
-    }
-
-    public Diary_item(String title, String content){
-        this.title = title;
-        this.content = content;
-    }
-
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title){
-        this.title=title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getContent(){
-        return content;
+    public Bitmap getPosterImg() {
+        return posterimg;
     }
 
-    public void setContent(String content){
-        this.title=content;
+    public void setPosterImg(Bitmap posterimg) {
+        this.posterimg = posterimg;
     }
 }

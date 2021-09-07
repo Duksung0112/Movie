@@ -66,22 +66,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginTop="5dp"
-                android:text="수정"
-                android:textSize="20dp"
-                android:backgroundTint="#f7dc4f"
-                android:id="@+id/btnedit"
-                android:layout_marginRight="60dp"
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_marginTop="5dp"
                 android:text="저장"
                 android:textSize="20dp"
                 android:backgroundTint="#f7dc4f"
                 android:id="@+id/btnsave"
                 />
+
 
         </LinearLayout>
 

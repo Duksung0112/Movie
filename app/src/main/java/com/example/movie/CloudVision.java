@@ -126,6 +126,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -172,6 +173,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -224,6 +226,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -270,6 +273,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -322,6 +326,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -368,6 +373,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -420,6 +426,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -466,6 +473,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -517,6 +525,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -563,6 +572,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -615,6 +625,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -661,6 +672,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -713,6 +725,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -759,6 +772,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -811,6 +825,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -857,6 +872,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -909,6 +925,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -955,6 +972,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1007,6 +1025,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1053,6 +1072,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1105,6 +1125,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1151,6 +1172,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1203,6 +1225,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1249,6 +1272,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1301,6 +1325,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1347,6 +1372,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1399,6 +1425,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1445,6 +1472,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1497,6 +1525,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1543,6 +1572,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1595,6 +1625,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1641,6 +1672,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1693,6 +1725,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1739,6 +1772,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, ANGRY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1791,6 +1825,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1837,6 +1872,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, JOY 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1889,6 +1925,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1935,6 +1972,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SORROW 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -1987,6 +2025,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
@@ -2033,6 +2072,7 @@ public class CloudVision extends AppCompatActivity {
                                     Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                                     bundle.putString("genre", result.get(i).genre);//번들에 넘길 값 저장
                                     bundle.putString("title", result.get(i).title);//번들에 넘길 값 저장
+                                    bundle.putInt("num", result.get(i).num);//번들에 넘길 값 저장
                                     bundle.putString("poster_image", result.get(i).poster_image);//번들에 넘길 값 저장
                                     bundle.putString("explain", "감정 분석 결과, SURPRISE 수치가 높은 것으로 나타나 "
                                             + result.get(i).genre + " 장르의 영화 " + result.get(i).title + "을(를) 추천드립니다.");//번들에 넘길 값 저장
