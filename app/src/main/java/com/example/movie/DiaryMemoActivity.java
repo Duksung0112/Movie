@@ -1,11 +1,13 @@
 package com.example.movie;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +20,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DiaryMemoActivity extends Fragment {
 
-    String genre, title, content, poster_image;
-    TextView tvgenre, tvtitle;
+    String  title, content, poster_image;
+    TextView  tvtitle;
+    EditText tvcontent;
     int num;
     Button btnsave;
     String TAG = "Retrofit diarymemo";
@@ -38,15 +41,14 @@ public class DiaryMemoActivity extends Fragment {
         // 레트로핏 인터페이스 객체 구현
         RetrofitService service = retrofit.create(RetrofitService.class);
 
-        tvgenre = (TextView) view.findViewById(R.id.tvgenre);
         tvtitle = (TextView) view.findViewById(R.id.tvtitle);
         btnsave = (Button) view.findViewById(R.id.btnsave);
+        tvcontent = (EditText) view.findViewById(R.id.diarymemo);
 
         if (getArguments() != null) {
-            genre = getArguments().getString("genre"); // 프래그먼트1에서 받아온 값 넣기
             title = getArguments().getString("title"); // 프래그먼트1에서 받아온 값 넣기
+            content= tvcontent.getText().toString();
 
-            tvgenre.setText("[" + genre + "] ");
             tvtitle.setText(title);
 
             btnsave.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +69,7 @@ public class DiaryMemoActivity extends Fragment {
                             if(response.isSuccessful()){
                                 Log.e(TAG, "onResponse success");
                                 Toast.makeText(getActivity(), "다이어리에 추가되었습니다", Toast.LENGTH_SHORT).show();
-
+                                startActivity(new Intent(getActivity(), MenuMainActivity.class));
                             }
                             else{
                                 // 실패

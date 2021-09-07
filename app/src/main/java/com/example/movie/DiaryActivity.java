@@ -74,6 +74,22 @@ public class DiaryActivity extends Fragment {
                     Log.e(TAG, "call onResponse success");
                     List<PostResultDiary> result = response.body();
 
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                            bundle.putString("title", result.get(0).title);//번들에 넘길 값 저장
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                            DiaryMemoActivity fragment3 = new DiaryMemoActivity();//프래그먼트3 선언
+                            fragment3.setArguments(bundle);//번들을 프래그먼트3로 보낼 준비
+                            transaction.replace(R.id.container, fragment3);
+                            getFragmentManager().beginTransaction().replace(R.id.container, new DiaryMemoActivity()).commit();
+                            transaction.commit();
+                        }
+                    });
+
                     for (PostResultDiary item : result) {
                         Thread uThread = new Thread() {
                             @Override
@@ -119,21 +135,7 @@ public class DiaryActivity extends Fragment {
 
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-                bundle.putString("genre", "로맨스");//번들에 넘길 값 저장
-                bundle.putString("title", "이터널 선샤인");//번들에 넘길 값 저장
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                DiaryMemoActivity fragment3 = new DiaryMemoActivity();//프래그먼트2 선언
-                fragment3.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
-                transaction.replace(R.id.container, fragment3);
-                getFragmentManager().beginTransaction().replace(R.id.container, new DiaryMemoActivity()).commit();
-                transaction.commit();
-            }
-        });
 
 
 
