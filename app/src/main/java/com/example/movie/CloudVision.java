@@ -2140,17 +2140,25 @@ public class CloudVision extends AppCompatActivity {
                 CAMERA_PERMISSIONS_REQUEST,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA)) {
+            Log.d(TAG, "startCamera: if통과");
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Log.d(TAG, "startCamera: 2");
             Uri photoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", getCameraFile());
+            Log.d(TAG, "startCamera: 3");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            Log.d(TAG, "startCamera: 4");
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Log.d(TAG, "startCamera: 5");
             startActivityForResult(intent, CAMERA_IMAGE_REQUEST);
+            Log.d(TAG, "startCamera: success");
         }
     }
 
     public File getCameraFile() {
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        Log.d(TAG, "getCameraFile: success"); 
         return new File(dir, FILE_NAME);
+
     }
 
     @Override
