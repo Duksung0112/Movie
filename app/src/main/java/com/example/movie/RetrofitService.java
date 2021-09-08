@@ -60,6 +60,4 @@ public interface RetrofitService {
     @GET("diary/delete/{num}")
     Call<PostResultDiary> DeleteNum (@Path("num") String num);
 
-
-
 }
