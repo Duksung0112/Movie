@@ -33,7 +33,6 @@ public class DiaryActivity extends Fragment {
     String TAG = "Retrofit diaryactivity";
     String base = "http://3.36.121.174";
     Bitmap bitmap;
-    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
 
 
     public DiaryActivity(){
@@ -60,9 +59,6 @@ public class DiaryActivity extends Fragment {
 
         if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
-        mMyAdapter.clearItem();
-        // listview 갱신
-        mMyAdapter.notifyDataSetChanged();
 
         Call<List<PostResultDiary>> call = service.getDiaryList();
 
@@ -80,12 +76,14 @@ public class DiaryActivity extends Fragment {
 
                             Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                             bundle.putString("title", result.get(0).title);//번들에 넘길 값 저장
+                            bundle.putString("poster_image", result.get(0).poster_image);//번들에 넘길 값 저장
+                            bundle.putInt("num", result.get(0).num);//번들에 넘길 값 저장
+
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
                             DiaryMemoActivity fragment3 = new DiaryMemoActivity();//프래그먼트3 선언
                             fragment3.setArguments(bundle);//번들을 프래그먼트3로 보낼 준비
                             transaction.replace(R.id.container, fragment3);
-                            getFragmentManager().beginTransaction().replace(R.id.container, new DiaryMemoActivity()).commit();
                             transaction.commit();
                         }
                     });
