@@ -1,12 +1,8 @@
 package com.example.movie;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -18,16 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -51,10 +43,15 @@ public class MovieRecommendActivity extends Fragment {
     Bitmap bitmap;
     Button btnback;
 
+    Gson gson = new GsonBuilder().setLenient().create();
+
+
+
+
     //Retrofit 인스턴스 생성
     retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
             .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
-            .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
+            .addConverterFactory(GsonConverterFactory.create(gson))  // Gson 변환기 등록
             .build();
 
     // 레트로핏 인터페이스 객체 구현
@@ -134,6 +131,7 @@ public class MovieRecommendActivity extends Fragment {
                     System.out.println("title="+title);
                     System.out.println("poster_image="+poster_image);
 
+
                     call.enqueue(new Callback<PostResultDiary>() {
                         @Override
                         public void onResponse(Call<PostResultDiary> call, Response<PostResultDiary> response) {
@@ -155,6 +153,64 @@ public class MovieRecommendActivity extends Fragment {
                             Log.e(TAG, "onFailure: " + t.getMessage());
                         }
                     });
+
+
+                    /*
+
+                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                    bundle.putInt("num", num);//번들에 넘길 값 저장
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                    HomeActivity fragment2 = new HomeActivity();//프래그먼트4 선언
+                    fragment2.setArguments(bundle);//번들을 프래그먼트4로 보낼 준비
+                    transaction.replace(R.id.container, fragment2);
+                    transaction.commit();
+
+                     */
+
+
+
+                    /*
+                    //Diary로 넘어가면서 원래 위시리스트에서 삭제하기
+
+                    Call<List<PostResultWishlist>> call2 = service.deleteWishlist(num);
+
+                    call2.enqueue(new Callback<List<PostResultWishlist>>() {
+                        @Override
+                        public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                            Log.e(TAG, "call onResponse");
+                            if (response.isSuccessful()) {
+                                Log.e(TAG, "call onResponse success");
+
+                            } else {
+                                // 실패
+                                Log.e(TAG, "call onResponse fail");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                            // 통신 실패
+                            Log.e(TAG, "call onFailure: " + t.getMessage());
+                        }
+
+                    });
+
+                     */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 }

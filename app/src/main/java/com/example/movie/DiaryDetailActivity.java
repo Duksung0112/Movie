@@ -53,8 +53,10 @@ public class DiaryDetailActivity extends Fragment {
             title = getArguments().getString("title"); // 프래그먼트1에서 받아온 값 넣기
             poster_image = getArguments().getString("poster_img"); // 프래그먼트1에서 받아온 값 넣기
             num=extra.getInt("num");
+            content = getArguments().getString("content");
 
             tvtitle.setText(title);
+            tvcontent.setText(content);
 
             btnsave.setOnClickListener(new View.OnClickListener() {
                 @Override

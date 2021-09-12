@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -49,6 +50,7 @@ public class HomeActivity extends Fragment {
     FloatingActionButton add;
     Bitmap bitmap;
     String base = "http://3.36.121.174";
+    int num;
 
     public HomeActivity() {
         // Required empty public constructor
@@ -98,6 +100,53 @@ public class HomeActivity extends Fragment {
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             // silently fail...
         }
+
+
+
+        /*
+
+
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            num = bundle.getInt("num");
+            System.out.println("넘어온 값 : " + num);
+
+            //Diary로 넘어가면서 원래 위시리스트에서 삭제하기
+
+            Call<List<PostResultWishlist>> call2 = service.deleteWishlist(num);
+
+            call2.enqueue(new Callback<List<PostResultWishlist>>() {
+                @Override
+                public void onResponse(Call<List<PostResultWishlist>> call, Response<List<PostResultWishlist>> response) {
+                    Log.e(TAG, "call onResponse");
+                    if (response.isSuccessful()) {
+                        Log.e(TAG, "call onResponse success");
+
+                    } else {
+                        // 실패
+                        Log.e(TAG, "call onResponse fail");
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<PostResultWishlist>> call, Throwable t) {
+                    // 통신 실패
+                    Log.e(TAG, "call onFailure: " + t.getMessage());
+                }
+
+            });
+
+
+
+        }
+
+         */
+
+
+
+
+
+
+
 
 
         // 스피너에서 선택 했을 경우 이벤트 처리
