@@ -85,6 +85,7 @@ public class DiaryMemoActivity extends Fragment {
                                 bundle.putString("title", result.get(0).title);//번들에 넘길 값 저장
                                 bundle.putString("poster_image", result.get(0).poster_image);//번들에 넘길 값 저장
                                 bundle.putInt("num", result.get(0).num);//번들에 넘길 값 저장
+                                bundle.putString("content", result.get(0).content);
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
                                 DiaryDetailActivity fragment4 = new DiaryDetailActivity();//프래그먼트4 선언

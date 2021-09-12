@@ -47,6 +47,9 @@ public interface RetrofitService {
     @GET("wishlist/getbytitle/{title}")
     Call<List<PostResultWishlist>> getByWishlistTitle(@Path("title") String title);
 
+    @GET("wishlist/delete/{num}")
+    Call<List<PostResultWishlist>> deleteWishlist(@Path("num") int num);
+
     // @GET( EndPoint-자원위치(URI) )
     @POST("diary/add")
     Call<PostResultDiary> AddDiary(@Body PostResultDiary postresultdiary);
