@@ -1,5 +1,6 @@
 package com.example.movie;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,10 +49,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeActivity extends Fragment {
     String TAG = "Retrofit homeactivity";
     Button btstart;
-    FloatingActionButton add;
     Bitmap bitmap;
     String base = "http://3.36.121.174";
     int num;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton add, fab1;
 
     public HomeActivity() {
         // Required empty public constructor
@@ -74,6 +77,7 @@ public class HomeActivity extends Fragment {
         ListView listView = (ListView)view.findViewById(R.id.movie_list);
         btstart = (Button) view.findViewById(R.id.btstart);
         add = (FloatingActionButton) view.findViewById(R.id.add);
+        fab1 = (FloatingActionButton) view.findViewById(R.id.fab1);
 
         MyAdapter mMyAdapter = new MyAdapter();
 
@@ -757,6 +761,8 @@ public class HomeActivity extends Fragment {
 
         });
 
+        /*
+
         View.OnClickListener allMovieOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -765,12 +771,45 @@ public class HomeActivity extends Fragment {
             }
         };
 
+
+         */
+
         add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+
+                                   @Override
+                                   public void onClick(View view) {
+                                       if (isFabOpen) {
+                                           ObjectAnimator.ofFloat(fab1, "translationX", 0f).start();
+
+                                           add.setImageResource(R.drawable.ic_add);
+                                       } else {
+                                           ObjectAnimator.ofFloat(fab1, "translationX", -250f).start();
+
+                                           add.setImageResource(R.drawable.ic_close);
+                                       }
+
+
+                                       isFabOpen = !isFabOpen;
+                                   }
+
+                /*
                 Snackbar.make(view, "전체 영화 리스트", Snackbar.LENGTH_LONG)
                         .setAction("AllMovie", allMovieOnClickListener).show();
-            }
+
+                 */
+        });
+
+
+            fab1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new aMovieActivity()).commit();
+
+                }
+
+
         });
 
 
