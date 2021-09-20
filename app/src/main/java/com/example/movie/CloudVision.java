@@ -2231,9 +2231,12 @@ public class CloudVision extends AppCompatActivity {
                         String packageName = getPackageName();
                         visionRequest.getRequestHeaders().set(ANDROID_PACKAGE_HEADER, packageName);
 
+
                         String sig = PackageManagerUtils.getSignature(getPackageManager(), packageName);
 
                         visionRequest.getRequestHeaders().set(ANDROID_CERT_HEADER, sig);
+
+
                     }
                 };
 
@@ -2318,6 +2321,9 @@ public class CloudVision extends AppCompatActivity {
         // Switch text to loading
         mImageDetails.setText(R.string.loading_message);
 
+        Toast.makeText(this, "•••감정 분석을 하고 있습니다•••", Toast.LENGTH_SHORT).show();
+
+
         // Do the real work in an async task, because we need to use the network anyway
         try {
             AsyncTask<Object, Void, String> FaceDetectionTask = new LableDetectionTask(this, prepareAnnotationRequest(bitmap));
@@ -2349,27 +2355,27 @@ public class CloudVision extends AppCompatActivity {
     }
 
     private static String convertResponseToString(BatchAnnotateImagesResponse response) {
-        StringBuilder message = new StringBuilder("I found these things:\n\n");
+        StringBuilder message = new StringBuilder("I found these things :\n\n");
 
         List<FaceAnnotation> faces = response.getResponses().get(0).getFaceAnnotations();
         if (faces != null) {
             for (FaceAnnotation face : faces) {
-                message.append("Anger: ");
+                message.append("Anger   (◟‸◞)   :   ");
                 String anger=output(face.getAngerLikelihood());
                 angerstar = anger;
                 message.append(anger);
                 message.append("\n");
-                message.append("Joy: ");
+                message.append("Joy   ◠‿◠   :   ");
                 String joy=output(face.getJoyLikelihood());
                 joystar = joy;
                 message.append(joy);
                 message.append("\n");
-                message.append("Sorrow: ");
+                message.append("Sorrow   •́︿•̀ ｡   :   ");
                 String sorrow=output(face.getSorrowLikelihood());
                 sorrowstar = sorrow;
                 message.append(sorrow);
                 message.append("\n");
-                message.append("Surprise: ");
+                message.append("Surprise   ☉་☉   :   ");
                 String surprise=output(face.getSurpriseLikelihood());
                 surprisestar = surprise;
                 message.append(surprise);
@@ -2391,10 +2397,10 @@ public class CloudVision extends AppCompatActivity {
     private static String output(String likelihood){
         String result="검출할 수 없습니다.";
         if (likelihood.equals("VERY_LIKELY")) result ="★★★★★";
-        else if (likelihood.equals("LIKELY")) result ="★★★★";
-        else if (likelihood.equals("POSSIBLE")) result ="★★★";
-        else if (likelihood.equals("UNLIKELY")) result ="★★";
-        else if (likelihood.equals("VERY_UNLIKELY")) result ="★";
+        else if (likelihood.equals("LIKELY")) result ="★★★★⛤";
+        else if (likelihood.equals("POSSIBLE")) result ="★★★⛤⛤";
+        else if (likelihood.equals("UNLIKELY")) result ="★★⛤⛤⛤";
+        else if (likelihood.equals("VERY_UNLIKELY")) result ="★⛤⛤⛤⛤";
 
         return result;
     }
