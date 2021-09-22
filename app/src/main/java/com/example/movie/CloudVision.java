@@ -69,12 +69,7 @@ public class CloudVision extends AppCompatActivity {
         mImageDetails = findViewById(R.id.image_details);
         mMainImage = findViewById(R.id.main_image);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(CloudVision.this);
-        builder
-                .setMessage(R.string.dialog_select_prompt)
-                .setPositiveButton(R.string.dialog_select_gallery, (dialog, which) -> startGalleryChooser())
-                .setNegativeButton(R.string.dialog_select_camera, (dialog, which) -> startCamera());
-        builder.create().show();
+        ChooseDialog();
 
         Button fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,16 +81,20 @@ public class CloudVision extends AppCompatActivity {
 
         });
 
-/*        Button fab = findViewById(R.id.btn_photo);
-        fab.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(CloudVision.this);
-            builder
-                    .setMessage(R.string.dialog_select_prompt)
-                    .setPositiveButton(R.string.dialog_select_gallery, (dialog, which) -> startGalleryChooser())
-                    .setNegativeButton(R.string.dialog_select_camera, (dialog, which) -> startCamera());
-            builder.create().show();
-        });*/
+        Button choose = findViewById(R.id.choose);
+        choose.setOnClickListener(view -> {
+            ChooseDialog();
+        });
 
+    }
+
+    public void ChooseDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(CloudVision.this);
+        builder
+                .setMessage(R.string.dialog_select_prompt)
+                .setPositiveButton(R.string.dialog_select_gallery, (dialog, which) -> startGalleryChooser())
+                .setNegativeButton(R.string.dialog_select_camera, (dialog, which) -> startCamera());
+        builder.create().show();
     }
 
     public void startGalleryChooser() {
