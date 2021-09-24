@@ -74,7 +74,6 @@ public class MovieInformationActivity extends Fragment {
 
         tvsynopsis.setMovementMethod(new ScrollingMovementMethod());
 
-
         if (getArguments() != null)
         {
             genre = getArguments().getString("genre"); // 프래그먼트1에서 받아온 값 넣기

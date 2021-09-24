@@ -57,6 +57,8 @@ public class DiaryActivity extends Fragment {
 
         MyAdapter2 mMyAdapter = new MyAdapter2();
 
+        listView.setAdapter(mMyAdapter);
+
         if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
 
@@ -130,6 +132,8 @@ public class DiaryActivity extends Fragment {
                 // 통신 실패
                 Log.e(TAG, "call onFailure: " + t.getMessage());
             }
+
+
 
         });
 
