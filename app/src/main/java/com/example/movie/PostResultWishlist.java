@@ -23,7 +23,8 @@ public class PostResultWishlist {
     @SerializedName("genre")
     public String genre;
 
-    public PostResultWishlist(String title, String synopsis, String poster_image, String genre) {
+    public PostResultWishlist(int num, String title, String synopsis, String poster_image, String genre) {
+        this.num=num;
         this.title = title;
         this.synopsis = synopsis;
         this.poster_image = poster_image;

@@ -20,11 +20,18 @@ public class PostResultDiary {
     @SerializedName("content")
     public String content;
 
+    @SerializedName("poster_image")
+    public String poster_image;
 
-    public PostResultDiary(String title, String content) {
-        this.title = title;
+
+    public PostResultDiary(String id, int num,  String title, String content, String poster_image) {
+        this.id=id;
+        this.num=num;
         this.content = content;
+        this.title= title;
+        this.poster_image=poster_image;
     }
+
 
     // toString()을 Override 해주지 않으면 객체 주소값을 출력함
     @Override
@@ -34,6 +41,7 @@ public class PostResultDiary {
                 ", num=" + num +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", poster_image='" + poster_image + '\'' +
                 '}';
     }
 }

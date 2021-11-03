@@ -5,11 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="#fffcf3"
-    tools:context="com.example.movie.CloudVision">
+    tools:context="com.example.movie.CloudVision"
+    android:id="@+id/cloud"
+    android:background="#8c8d91"
+    >
 
 
-    <include layout="@layout/content_main" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+>>>>>>> aa04a9a42fc05a6de856b6e779d3b7c192354e39
+
+        <include layout="@layout/content_main"
+        android:layout_height="500dp"
+        android:layout_width="match_parent"/>
 
     <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -18,22 +31,27 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="64dp"
             android:src="@android:drawable/ic_menu_gallery" /> -->
+
     <Button
         android:id="@+id/choose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="550dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
-        android:text="카메라" />
+        android:text="카메라"
+        android:background="@drawable/custombutton"/>
 
     <Button
         android:id="@+id/fab"
         android:text="추천받기"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="64dp"
-        android:layout_marginRight="64dp" />
+        android:layout_marginRight="64dp"
+        android:background="@drawable/custombutton"/>
+    </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

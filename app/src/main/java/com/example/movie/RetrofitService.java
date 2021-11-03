@@ -15,9 +15,6 @@ import retrofit2.http.Path;
 
 public interface RetrofitService {
 
-    // @GET( EndPoint-자원위치(URI) )
-    @POST("userinfo/add")
-    Call<PostResultDiary> AddDiary(@Body PostResultDiary postresultdiary);
 
 
     @GET("userinfo/get/{id}")
@@ -50,8 +47,20 @@ public interface RetrofitService {
     @GET("wishlist/getbytitle/{title}")
     Call<List<PostResultWishlist>> getByWishlistTitle(@Path("title") String title);
 
+    @GET("wishlist/delete/{num}")
+    Call<List<PostResultWishlist>> deleteWishlist(@Path("num") int num);
 
+    // @GET( EndPoint-자원위치(URI) )
+    @POST("diary/add")
+    Call<PostResultDiary> AddDiary(@Body PostResultDiary postresultdiary);
 
+    @GET("diary/list")
+    Call<List<PostResultDiary>> getDiaryList();
 
+    @POST("diary/update")
+    Call<PostResultDiary> UpdateDiary(@Body PostResultDiary postresultdiary);
+
+    @GET("diary/delete/{num}")
+    Call<PostResultDiary> DeleteNum (@Path("num") String num);
 
 }

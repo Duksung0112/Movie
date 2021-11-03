@@ -1,173 +1,147 @@
 package com.example.movie;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.content.Intent;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.movie.Room.AppDatabase;
-import com.example.movie.Room.User;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 
-
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DiaryActivity extends Fragment {
 
-    private final int SAVE_MEMO_ACTIVITY = 1;
-    private FloatingActionButton add;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private RecyclerAdapter adapter;
-    private List<User> users;
+    String TAG = "Retrofit diaryactivity";
+    String base = "http://3.36.121.174";
+    Bitmap bitmap;
+
+
+    public DiaryActivity(){
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.activity_diary, container, false);
 
-        add = (FloatingActionButton) view.findViewById(R.id.addMemo);
-        recyclerView = (RecyclerView) view.findViewById(R.id.mainRecyclerView);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        adapter = new RecyclerAdapter();
+        //Retrofit 인스턴스 생성
+        retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
+                .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
+                .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
+                .build();
 
-        users = AppDatabase.getInstance(getActivity()).userDao().getAll();
-        int size = users.size();
-        for(int i = 0; i < size; i++){
-            adapter.addItem(users.get(i));
-        }
+        // 레트로핏 인터페이스 객체 구현
+        RetrofitService service = retrofit.create(RetrofitService.class);
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        ListView listView = (ListView)view.findViewById(R.id.diarylist);
+
+        MyAdapter2 mMyAdapter = new MyAdapter2();
+
+        if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
 
-        View.OnClickListener SaveMemoOnClickListener = new View.OnClickListener() {
+        Call<List<PostResultDiary>> call = service.getDiaryList();
+
+        call.enqueue(new Callback<List<PostResultDiary>>() {
             @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new SaveMemoActivity()).commit();
+            public void onResponse(Call<List<PostResultDiary>> call, Response<List<PostResultDiary>> response) {
+                Log.e(TAG, "call onResponse");
+                if (response.isSuccessful()) {
+                    Log.e(TAG, "call onResponse success");
+                    List<PostResultDiary> result = response.body();
 
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                            bundle.putString("title", result.get(0).title);//번들에 넘길 값 저장
+                            bundle.putString("poster_image", result.get(0).poster_image);//번들에 넘길 값 저장
+                            bundle.putInt("num", result.get(0).num);//번들에 넘길 값 저장
+                            bundle.putString("content", result.get(0).content);
+
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                            DiaryMemoActivity fragment3 = new DiaryMemoActivity();//프래그먼트3 선언
+                            fragment3.setArguments(bundle);//번들을 프래그먼트3로 보낼 준비
+                            transaction.replace(R.id.container, fragment3);
+                            transaction.commit();
+                        }
+                    });
+
+                    for (PostResultDiary item : result) {
+                        Thread uThread = new Thread() {
+                            @Override
+                            public void run(){
+                                try{
+                                    //서버에 올려둔 이미지 URL
+                                    URL url = new URL(base + item.poster_image);
+                                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                                    conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                                    conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                                    InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                                    bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                                }catch (MalformedURLException e){
+                                    e.printStackTrace();
+                                }catch (IOException e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        uThread.start(); // 작업 Thread 실행
+                        try{
+                            uThread.join();
+                            mMyAdapter.addItem(bitmap, item.title);
+
+                        }catch (InterruptedException e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    listView.setAdapter(mMyAdapter);
+
+
+                } else {
+                    // 실패
+                    Log.e(TAG, "call onResponse fail");
+                }
             }
-        };
-
-
-        add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "SaveMemo", Snackbar.LENGTH_LONG)
-                        .setAction("Go", SaveMemoOnClickListener).show();
-
+            public void onFailure(Call<List<PostResultDiary>> call, Throwable t) {
+                // 통신 실패
+                Log.e(TAG, "call onFailure: " + t.getMessage());
             }
+
         });
 
 
 
 
+
         return view;
+
     }
 
-/*
-    @Override
-    public void onStart() {
-        users = AppDatabase.getInstance(getActivity()).userDao().getAll();
-        adapter.addItems((ArrayList) users);
-        super.onStart();
-    }
-
- */
 
 
 }
-
-/*
-package com.example.movie;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.movie.RecyclerAdapter;
-import com.example.movie.Room.AppDatabase;
-import com.example.movie.Room.User;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class DiaryActivity extends Fragment {
-
-    private final int SAVE_MEMO_ACTIVITY = 1;
-    private FloatingActionButton add;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private RecyclerAdapter adapter;
-    private List<User> users;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.activity_diary, container, false);
-
-        add = (FloatingActionButton) view.findViewById(R.id.addMemo);
-        recyclerView = (RecyclerView) view.findViewById(R.id.mainRecyclerView);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        adapter = new RecyclerAdapter();
-
-        users = AppDatabase.getInstance(getActivity()).userDao().getAll();
-        int size = users.size();
-        for(int i = 0; i < size; i++){
-            adapter.addItem(users.get(i));
-        }
-
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-
-
-        View.OnClickListener SaveMemoOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new SaveMemoActivity()).commit();
-
-            }
-        };
-
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "SaveMemo", Snackbar.LENGTH_LONG)
-                        .setAction("Go", SaveMemoOnClickListener).show();
-
-            }
-        });
-
-
-
-
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        users = AppDatabase.getInstance(getActivity()).userDao().getAll();
-        adapter.addItems((ArrayList) users);
-        super.onStart();
-    }
-
-}*/

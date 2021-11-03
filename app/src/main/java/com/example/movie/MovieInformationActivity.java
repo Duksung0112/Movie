@@ -42,11 +42,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieInformationActivity extends Fragment {
     String genre, title, synopsis, star, poster_image;
+    int num;
     TextView tvgenre, tvtitle, tvsynopsis, tvstar;
     ImageView imgposter;
     Bitmap bitmap;
     Button btadd;
     String TAG = "Retrofit movieinfo";
+    String base = "http://3.36.121.174";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +58,7 @@ public class MovieInformationActivity extends Fragment {
 
         //Retrofit 인스턴스 생성
         retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("http://52.79.129.64:8081/")    // baseUrl 등록
+                .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
                 .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
                 .build();
 
@@ -77,6 +79,7 @@ public class MovieInformationActivity extends Fragment {
         {
             genre = getArguments().getString("genre"); // 프래그먼트1에서 받아온 값 넣기
             title = getArguments().getString("title"); // 프래그먼트1에서 받아온 값 넣기
+            num=getArguments().getInt("num");
             synopsis = getArguments().getString("synopsis"); // 프래그먼트1에서 받아온 값 넣기
             star = getArguments().getString("star"); // 프래그먼트1에서 받아온 값 넣기
             poster_image = getArguments().getString("poster_image"); // 프래그먼트1에서 받아온 값 넣기
@@ -93,7 +96,7 @@ public class MovieInformationActivity extends Fragment {
                 public void run(){
                     try{
                         //서버에 올려둔 이미지 URL
-                        URL url = new URL("http://52.79.129.64" + poster_image);
+                        URL url = new URL(base + poster_image);
                         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                         conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
                         conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
@@ -119,7 +122,7 @@ public class MovieInformationActivity extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    PostResultWishlist postresultwishlist = new PostResultWishlist(title, synopsis, poster_image, genre);
+                    PostResultWishlist postresultwishlist = new PostResultWishlist(num, title, synopsis, poster_image, genre);
 
                     Call<PostResultWishlist> call = service.AddWishlist(postresultwishlist);
 
@@ -151,16 +154,9 @@ public class MovieInformationActivity extends Fragment {
 
             }) ;
 
-
         }
-
-
-
-
 
         return view;
 
     }
-
-
 }
