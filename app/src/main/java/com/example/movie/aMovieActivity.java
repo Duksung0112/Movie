@@ -46,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class aMovieActivity extends Fragment {
     String TAG = "Retrofit aMovie";
     Bitmap bitmap;
-    String base = "http://3.36.121.174";
+    String base = "http://3.34.122.213";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +56,7 @@ public class aMovieActivity extends Fragment {
 
         //Retrofit 인스턴스 생성
         retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
+                .baseUrl("http://3.34.122.213:8081/")    // baseUrl 등록
                 .addConverterFactory(GsonConverterFactory.create())  // Gson 변환기 등록
                 .build();
 
@@ -513,6 +513,8 @@ public class aMovieActivity extends Fragment {
                     }catch (InterruptedException e){
                         e.printStackTrace();
                     }
+
+
 
                 } else {
                     // 실패

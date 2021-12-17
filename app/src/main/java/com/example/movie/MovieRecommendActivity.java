@@ -39,7 +39,7 @@ public class MovieRecommendActivity extends Fragment {
     String genre, title, poster_image, explain , id;
     String TAG = "Retrofit moviereco";
 
-    String base = "http://3.36.121.174";
+    String base = "http://3.34.122.213";
     Bitmap bitmap;
     Button btnback;
 
@@ -50,7 +50,7 @@ public class MovieRecommendActivity extends Fragment {
 
     //Retrofit 인스턴스 생성
     retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
-            .baseUrl("http://3.36.121.174:8081/")    // baseUrl 등록
+            .baseUrl("http://3.34.122.213:8081/")    // baseUrl 등록
             .addConverterFactory(GsonConverterFactory.create(gson))  // Gson 변환기 등록
             .build();
 
